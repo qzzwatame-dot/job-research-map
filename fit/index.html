@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>キャリア相性診断</title>
+    <link rel="stylesheet" href="./styles.css?v=20260514-1">
+  </head>
+  <body>
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">Career Fit Map</p>
+        <h1>キャリア相性診断</h1>
+      </div>
+      <nav>
+        <a href="../planner/">Planner</a>
+        <a href="../visualizer/">Research Map</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">3 minutes diagnosis</p>
+          <h2>あなたはどんな環境で伸びるタイプ？</h2>
+          <p>20問の直感回答から、向いている職場タイプ、業界、企業、ESで押すべき強みを出します。</p>
+          <div class="hero-actions">
+            <button id="startDiagnosis" type="button">診断をはじめる</button>
+            <button id="showSample" class="secondary" type="button">サンプル結果を見る</button>
+          </div>
+        </div>
+        <div class="result-preview" aria-label="診断結果プレビュー">
+          <span>TYPE</span>
+          <strong>Growth Strategist</strong>
+          <small>成長環境・裁量・論理性で伸びるタイプ</small>
+        </div>
+      </section>
+
+      <section id="diagnosisPanel" class="diagnosis-panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Questions</p>
+            <h2>直感に近い方を選んでください</h2>
+          </div>
+          <div class="progress"><span id="progressText">0 / 20</span><i id="progressBar"></i></div>
+        </div>
+        <div id="questionList" class="question-list"></div>
+        <div class="diagnosis-actions">
+          <button id="resetAnswers" class="secondary" type="button">リセット</button>
+          <button id="calculateResult" type="button">結果を見る</button>
+        </div>
+      </section>
+
+      <section id="resultPanel" class="result-panel" hidden>
+        <article class="result-card">
+          <div>
+            <p class="eyebrow">Your Career Fit</p>
+            <h2 id="typeName">-</h2>
+            <p id="typeLead">-</p>
+          </div>
+          <div class="type-score">
+            <strong id="fitScore">0</strong>
+            <span>fit score</span>
+          </div>
+        </article>
+
+        <section class="insight-grid">
+          <article>
+            <h3>伸びる環境</h3>
+            <ul id="fitEnvironment"></ul>
+          </article>
+          <article>
+            <h3>避けたい環境</h3>
+            <ul id="riskEnvironment"></ul>
+          </article>
+          <article>
+            <h3>ES・面接で押す強み</h3>
+            <ul id="esStrengths"></ul>
+          </article>
+        </section>
+
+        <section class="industry-section">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Industry Fit</p>
+              <h2>相性が良い業界</h2>
+            </div>
+          </div>
+          <div id="industryFitList" class="industry-fit-list"></div>
+        </section>
+
+        <section class="company-section">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Recommended Companies</p>
+              <h2>相性が良い企業TOP10</h2>
+            </div>
+            <button id="saveToPlanner" type="button">Plannerに保存</button>
+          </div>
+          <div id="companyList" class="company-list"></div>
+        </section>
+
+        <section class="share-section">
+          <div class="share-card" id="shareCard">
+            <p>Career Fit Map</p>
+            <h2 id="shareType">-</h2>
+            <span id="shareSummary">-</span>
+          </div>
+          <div class="share-actions">
+            <button id="copyResult" type="button">結果テキストをコピー</button>
+            <a href="../planner/">応募プランナーで管理する</a>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" hidden></div>
+    <script src="./app.js?v=20260514-1"></script>
+  </body>
+</html>
