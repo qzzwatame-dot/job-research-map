@@ -1,0 +1,4 @@
+company,event_type,title,event_date,deadline_date,url,status,source_url,notes
+企業名,28卒マイページ,28卒マイページ登録,,,https://example.com,受付中,https://example.com,確認メモ
+企業名,インターン,夏インターン,2026-08-01,2026-06-30,https://example.com,予定,https://example.com,応募条件や選考有無
+企業名,ES締切,本選考ES締切,,2027-03-01,https://example.com,未確認,https://example.com,提出物メモ

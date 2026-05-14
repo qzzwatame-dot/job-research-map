@@ -1,0 +1,4 @@
+company,category,date_or_year,keywords_or_traits,evidence_summary,source_title,source_url,source_type,reliability_score
+企業名,culture,2026-05-13,"安定, 裁量, スピード",根拠の要約,資料名,https://example.com,recruiting_page,3
+企業名,offer_profile,2025,"自走力, 論理性",内定者傾向・面接傾向の要約,資料名,https://example.com,interview,3
+企業名,turnover_reason,2024-2025,"career_growth",転職理由の根拠要約,資料名,https://example.com,review_site,2

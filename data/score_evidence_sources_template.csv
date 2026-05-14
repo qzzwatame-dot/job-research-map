@@ -1,0 +1,4 @@
+company,score_key,source_type,title,url,reliability_score,evidence_summary,checked_date
+企業名,compensation_score,IR,有価証券報告書,https://example.com,5,平均年収や人的資本情報を確認,2026-05-13
+企業名,new_grad_access_score,採用ページ,新卒採用ページ,https://example.com,4,28卒マイページや募集職種を確認,2026-05-13
+企業名,culture_clarity_score,口コミ,口コミサイト,https://example.com,2,社風に関する複数コメントを確認,2026-05-13

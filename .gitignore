@@ -1,0 +1,7 @@
+.DS_Store
+.pycache/
+__pycache__/
+*.pyc
+.codex/
+node_modules/
+job_research.db

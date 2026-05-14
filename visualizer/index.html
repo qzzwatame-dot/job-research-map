@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>就活企業研究マップ</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Job Research Database</p>
+        <h1>就活企業研究マップ</h1>
+      </div>
+      <div class="header-stats" aria-label="データ概要">
+        <button id="homeJump" class="home-jump is-active" type="button"><span id="statCompanies">0</span><small>Companies</small></button>
+        <div><span id="statIndustries">0</span><small>Industries</small></div>
+        <button id="interestedJump" class="interested-jump" type="button"><span id="statInterested">0</span><small>Interested</small></button>
+        <button id="profileJump" class="profile-jump" type="button"><span>My Profile</span><small>設定を開く</small></button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="control-panel" aria-label="絞り込み">
+        <section>
+          <h2>Filters</h2>
+          <label class="field">
+            <span>業界</span>
+            <select id="industryFilter"></select>
+          </label>
+          <label class="field">
+            <span>最低総合点 <strong id="minScoreLabel">3.00</strong></span>
+            <input id="minScore" type="range" min="3" max="5" value="3" step="0.05">
+          </label>
+          <label class="toggle">
+            <input id="confirmedOnly" type="checkbox">
+            <span>新卒マイページ確認済みだけ</span>
+          </label>
+        </section>
+
+        <section>
+          <h2>Industry Status</h2>
+          <div id="industryStatusList" class="status-list"></div>
+        </section>
+      </aside>
+
+      <section class="main-grid">
+        <article id="applicantProfile" class="panel applicant-panel">
+          <h2>Applicant Profile</h2>
+          <div class="applicant-layout">
+            <div>
+              <label class="field">
+                <span>MBTI</span>
+                <select id="mbtiType">
+                  <option value="">未設定</option>
+                  <option>INTJ</option><option>INTP</option><option>ENTJ</option><option>ENTP</option>
+                  <option>INFJ</option><option>INFP</option><option>ENFJ</option><option>ENFP</option>
+                  <option>ISTJ</option><option>ISFJ</option><option>ESTJ</option><option>ESFJ</option>
+                  <option>ISTP</option><option>ISFP</option><option>ESTP</option><option>ESFP</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>志向プリセット</span>
+                <select id="presetMode">
+                  <option value="balanced">総合バランス</option>
+                  <option value="salary">高年収重視</option>
+                  <option value="growthCareer">成長環境重視</option>
+                  <option value="stability">安定重視</option>
+                  <option value="workLife">ワークライフバランス重視</option>
+                  <option value="engineer">理系技術職向け</option>
+                  <option value="generalist">文系総合職向け</option>
+                </select>
+              </label>
+              <div class="profile-grid">
+                <label><span>外向志向</span><input id="extroversionPreference" type="range" min="1" max="5" value="3"></label>
+                <label><span>変化耐性</span><input id="changeTolerance" type="range" min="1" max="5" value="3"></label>
+                <label><span>チーム志向</span><input id="teamOrientation" type="range" min="1" max="5" value="3"></label>
+                <label><span>裁量志向</span><input id="autonomyPreference" type="range" min="1" max="5" value="3"></label>
+                <label><span>論理重視</span><input id="logicOrientation" type="range" min="1" max="5" value="3"></label>
+                <label><span>計画志向</span><input id="planningOrientation" type="range" min="1" max="5" value="3"></label>
+              </div>
+            </div>
+            <div>
+              <label class="field">
+                <span>希望職種</span>
+                <input id="preferredJobTypes" type="text" placeholder="例: 企画, SE, コンサル">
+              </label>
+              <label class="field">
+                <span>希望勤務地</span>
+                <input id="preferredLocations" type="text" placeholder="例: 東京, 関西, リモート">
+              </label>
+              <label class="field">
+                <span>希望条件・制約</span>
+                <textarea id="conditionSummary" rows="4" placeholder="勤務地、年収、働き方、転勤、海外、業界希望など"></textarea>
+              </label>
+            </div>
+            <div>
+              <label class="field">
+                <span>ES・自己PR</span>
+                <textarea id="esDraft" rows="5" placeholder="ガクチカ、自己PR、志望動機の素材"></textarea>
+              </label>
+              <label class="field">
+                <span>経歴・スキル</span>
+                <textarea id="experienceSummary" rows="4" placeholder="インターン、研究、資格、開発、営業経験など"></textarea>
+              </label>
+            </div>
+          </div>
+          <div class="profile-actions">
+            <button id="saveApplicantProfile" class="side-button" type="button">プロフィール更新</button>
+            <button id="runApplicantAnalysis" class="side-button secondary" type="button">AI分析を更新</button>
+            <p id="profileStatus" class="profile-status" aria-live="polite"></p>
+          </div>
+        </article>
+
+        <article class="panel profile-interested-panel">
+          <div class="panel-head">
+            <div>
+              <h2>Interested Companies</h2>
+              <p>志望中・お気に入りとして残した企業だけを管理</p>
+            </div>
+          </div>
+          <div id="interestedCompanyList" class="interested-list"></div>
+        </article>
+
+        <article class="panel profile-timeline-panel">
+          <div class="panel-head">
+            <div>
+              <h2>Application Timeline</h2>
+              <p>応募状況、締切・イベント、根拠ソースの更新を企業別に集約</p>
+            </div>
+          </div>
+          <div id="profileTimelineSummary" class="timeline-summary"></div>
+          <div id="profileTimelineList" class="timeline-list"></div>
+        </article>
+
+        <article class="panel map-panel">
+          <div class="panel-head">
+            <div>
+              <h2 id="companyMapTitle">業界内企業マップ</h2>
+              <p id="axisCaption">業界近接マップで業界を選択すると、業界内企業の6軸アイコンを表示します</p>
+            </div>
+            <div class="legend" id="mapLegend"></div>
+          </div>
+          <svg id="companyMap" role="img" aria-label="業界内企業マップ"></svg>
+        </article>
+
+        <article class="panel detail-panel">
+          <div class="panel-head">
+            <div>
+              <h2 id="selectedCompany">企業を選択</h2>
+              <p id="selectedMeta">マップ上の円を選ぶと詳細を表示します</p>
+            </div>
+            <div class="detail-actions">
+              <button id="interestToggle" class="link-button secondary" type="button">志望リスト追加</button>
+              <a id="mypageLink" class="link-button" href="#" target="_blank" rel="noreferrer" hidden>マイページ</a>
+            </div>
+          </div>
+          <div id="scoreBars" class="score-bars"></div>
+          <div class="personal-score">
+            <div>
+              <span>あなた向け</span>
+              <strong id="personalScore">-</strong>
+            </div>
+            <div>
+              <span>内定しやすさ</span>
+              <strong id="offerScore">-</strong>
+            </div>
+            <div>
+              <span>相性</span>
+              <strong id="fitScore">-</strong>
+            </div>
+            <div>
+              <span>志望動機</span>
+              <strong id="motivationScore">-</strong>
+            </div>
+            <div>
+              <span>ES素材</span>
+              <strong id="esMaterialScore">-</strong>
+            </div>
+          </div>
+          <div class="detail-tabs" role="tablist" aria-label="企業詳細">
+            <button class="is-active" type="button" data-tab="application">応募状況</button>
+            <button type="button" data-tab="events">締切・イベント</button>
+            <button type="button" data-tab="sources">根拠ソース</button>
+          </div>
+          <div class="application-box detail-tab-panel" id="tabApplication">
+            <h3>応募状況・個人メモ</h3>
+            <label class="field compact">
+              <span>ステータス</span>
+              <select id="applicationStatus">
+                <option>未調査</option>
+                <option>調査中</option>
+                <option>マイページ登録済み</option>
+                <option>イベント参加予定</option>
+                <option>ES準備中</option>
+                <option>応募済み</option>
+                <option>選考中</option>
+                <option>内定</option>
+                <option>辞退候補</option>
+                <option>見送り</option>
+              </select>
+            </label>
+            <label class="field compact">
+              <span>次アクション</span>
+              <input id="nextAction" type="text" placeholder="例: 新卒マイページ登録、OB訪問">
+            </label>
+            <label class="field compact">
+              <span>締切</span>
+              <input id="nextDeadline" type="date">
+            </label>
+            <label class="field compact">
+              <span>メモ</span>
+              <textarea id="personalMemo" rows="3" placeholder="志望理由、懸念、面接で話す材料"></textarea>
+            </label>
+            <div class="action-row">
+              <button id="savePersonalData" type="button">保存</button>
+              <button id="exportPersonalData" type="button">CSV出力</button>
+            </div>
+          </div>
+          <div class="application-box detail-tab-panel" id="tabEvents" hidden>
+            <h3>締切・イベント管理</h3>
+            <div id="eventList" class="mini-list"></div>
+            <div class="inline-form">
+              <label class="field compact">
+                <span>種類</span>
+                <select id="eventType">
+                  <option>新卒マイページ</option>
+                  <option>インターン</option>
+                  <option>説明会</option>
+                  <option>ES締切</option>
+                  <option>Webテスト</option>
+                  <option>面接</option>
+                  <option>OB訪問</option>
+                  <option>その他</option>
+                </select>
+              </label>
+              <label class="field compact">
+                <span>タイトル</span>
+                <input id="eventTitle" type="text" placeholder="例: 夏インターンES締切">
+              </label>
+              <label class="field compact">
+                <span>日付</span>
+                <input id="eventDate" type="date">
+              </label>
+              <label class="field compact">
+                <span>締切</span>
+                <input id="eventDeadline" type="date">
+              </label>
+              <label class="field compact">
+                <span>URL</span>
+                <input id="eventUrl" type="text" placeholder="https://">
+              </label>
+              <label class="field compact">
+                <span>メモ</span>
+                <textarea id="eventNotes" rows="2"></textarea>
+              </label>
+              <button id="addEvent" type="button">イベント追加</button>
+            </div>
+          </div>
+          <div class="application-box detail-tab-panel" id="tabSources" hidden>
+            <h3>根拠ソース</h3>
+            <div id="sourceList" class="mini-list"></div>
+            <div class="inline-form">
+              <label class="field compact">
+                <span>スコア項目</span>
+                <select id="sourceScoreKey"></select>
+              </label>
+              <label class="field compact">
+                <span>ソース種別</span>
+                <select id="sourceType">
+                  <option>IR</option>
+                  <option>採用ページ</option>
+                  <option>人的資本開示</option>
+                  <option>口コミ</option>
+                  <option>選考体験記</option>
+                  <option>ニュース</option>
+                  <option>統計</option>
+                  <option>その他</option>
+                </select>
+              </label>
+              <label class="field compact">
+                <span>タイトル</span>
+                <input id="sourceTitle" type="text" placeholder="例: 統合報告書 2025">
+              </label>
+              <label class="field compact">
+                <span>URL</span>
+                <input id="sourceUrl" type="text" placeholder="https://">
+              </label>
+              <label class="field compact">
+                <span>信頼度 <strong id="sourceReliabilityLabel">3</strong></span>
+                <input id="sourceReliability" type="range" min="1" max="5" value="3">
+              </label>
+              <label class="field compact">
+                <span>要約</span>
+                <textarea id="sourceSummary" rows="2"></textarea>
+              </label>
+              <button id="addSource" type="button">根拠追加</button>
+            </div>
+          </div>
+          <div class="application-box detail-tab-panel" id="tabAi">
+            <h3>AI分析結果</h3>
+            <div id="aiInsightList" class="mini-list"></div>
+          </div>
+          <div class="insight-grid">
+            <div>
+              <h3>比較優位</h3>
+              <p id="advantageText">-</p>
+            </div>
+            <div>
+              <h3>確認したい点</h3>
+              <p id="cautionText">-</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel industry-panel">
+          <div class="panel-head">
+            <div>
+              <h2>業界近接マップ</h2>
+              <p>スコア構造が近い業界ほど近く、強い類似は線で接続</p>
+            </div>
+          </div>
+          <svg id="industryMap" role="img" aria-label="業界近接マップ"></svg>
+        </article>
+
+        <article class="panel recommendation-panel">
+          <div class="panel-head">
+            <div>
+              <h2>応募優先順位</h2>
+              <p>応募者DBと企業DBを照合した次アクション候補</p>
+            </div>
+          </div>
+          <div id="recommendationList" class="recommendation-list"></div>
+        </article>
+
+        <article class="panel table-panel">
+          <div class="panel-head">
+            <div>
+              <h2>比較テーブル</h2>
+              <p>総合点順。行を選ぶと詳細に反映</p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>企業</th>
+                  <th>業界</th>
+                  <th>総合</th>
+                  <th>あなた向け</th>
+                  <th>志望動機</th>
+                  <th>ES素材</th>
+                  <th>状況</th>
+                  <th>待遇</th>
+                  <th>キャリア</th>
+                  <th>安定</th>
+                  <th>28卒</th>
+                </tr>
+              </thead>
+              <tbody id="companyTable"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <div id="tooltip" class="tooltip" hidden></div>
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+    <script src="./app.js"></script>
+  </body>
+</html>

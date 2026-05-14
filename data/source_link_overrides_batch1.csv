@@ -1,0 +1,51 @@
+company,recruit_url,recruit_status,recruit_title,recruit_summary,ir_url,ir_title,ir_summary
+NTTデータ,https://www.nttdata.com/global/ja/recruit/,要確認,新卒採用情報,公式採用サイトで職種・募集要項・イベント導線を確認,https://www.nttdata.com/global/ja/investors/library/annualreport/,統合レポート/アニュアルレポート,IRライブラリで統合レポート・事業戦略・人的資本情報を確認
+富士通,https://fujitsu.recruiting.jp.fujitsu.com/,要確認,新卒採用情報,公式新卒採用サイトで募集職種と選考情報を確認,https://global.fujitsu/ja-jp/ir/library/integratedrep/,統合レポート,統合レポートで事業戦略・財務・サステナビリティ情報を確認
+NEC,https://jpn.nec.com/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで職種・募集要項を確認,https://jpn.nec.com/ir/library/annual/index.html,統合レポート/アニュアルレポート,IRライブラリで統合レポートと人的資本情報を確認
+日立製作所,https://www.hitachi.co.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種・イベント導線を確認,https://www.hitachi.co.jp/IR/library/integrated/,統合報告書,統合報告書で事業戦略・人的資本・財務情報を確認
+NTTドコモ,https://information.nttdocomo-fresh.jp/,要確認,新卒採用情報,公式新卒採用サイトでエントリー・募集情報を確認,https://group.ntt/jp/ir/library/annual/,NTTグループ統合報告書,親会社NTTの統合報告書で通信事業と人的資本情報を確認
+KDDI,https://career.kddi.com/recruit/student/,要確認,新卒採用情報,公式新卒採用サイトで募集要項・イベントを確認,https://www.kddi.com/corporate/ir/ir-library/annual-report/,統合レポート,統合レポートで通信事業・成長戦略・人的資本情報を確認
+ソフトバンク,https://recruit.softbank.jp/graduate/,要確認,新卒採用情報,公式新卒採用サイトで職種・募集要項を確認,https://group.softbank/ir/library/annual_reports,アニュアルレポート,IRライブラリでグループ戦略・財務情報を確認
+楽天グループ,https://corp.rakuten.co.jp/careers/graduates/,要確認,新卒採用情報,公式新卒採用サイトで募集職種と採用情報を確認,https://corp.rakuten.co.jp/investors/documents/annual.html,アニュアルレポート,IR資料で事業セグメント・財務・成長戦略を確認
+サイバーエージェント,https://www.cyberagent.co.jp/careers/students/,要確認,新卒採用情報,公式採用サイトで職種・選考情報を確認,https://www.cyberagent.co.jp/ir/library/annual/,統合報告書/アニュアルレポート,IRライブラリでメディア・広告・ゲーム事業と財務情報を確認
+LINEヤフー,https://www.lycorp.co.jp/ja/recruit/newgrads/,要確認,新卒採用情報,公式新卒採用サイトで職種と募集情報を確認,https://www.lycorp.co.jp/ja/ir/library/annualreport/,統合報告書,IRライブラリで事業統合後の戦略と人的資本情報を確認
+DeNA,https://dena.com/jp/recruit/students/,要確認,新卒採用情報,公式新卒採用サイトで募集職種と選考情報を確認,https://dena.com/jp/ir/library/annualreport/,統合報告書,IRライブラリで事業戦略・財務情報を確認
+メルカリ,https://careers.mercari.com/students/,要確認,新卒採用情報,公式採用サイトで新卒・学生向け募集情報を確認,https://about.mercari.com/ir/library/annual-report/,統合報告書,IRライブラリでマーケットプレイス事業と人的資本情報を確認
+Sansan,https://jp.corp-sansan.com/recruit/graduates/,要確認,新卒採用情報,公式新卒採用サイトで募集職種・カルチャー情報を確認,https://ir.corp-sansan.com/ja/ir/library/annual.html,有価証券報告書/統合資料,IRライブラリで財務・事業成長情報を確認
+NTTデータビジネスシステムズ,https://www.nttdata-bizsys.co.jp/recruit/newgraduate/recruit/mypage.html,確認済み,新卒マイページ,公式新卒採用マイページ導線を確認,https://www.nttdata.com/global/ja/investors/library/annualreport/,NTTデータ統合レポート,親会社グループの統合レポートで事業基盤と人的資本情報を確認
+アクセンチュア,https://www.accenture.com/jp-ja/careers/local/graduate,要確認,新卒採用情報,公式新卒採用サイトで職種・選考情報を確認,https://www.accenture.com/us-en/about/company/annual-report,Annual Report,グローバル年次報告で事業構造・財務・人材戦略を確認
+デロイトトーマツコンサルティング,https://www2.deloitte.com/jp/ja/pages/careers/articles/newgraduates.html,要確認,新卒採用情報,公式新卒採用サイトで募集部門・選考情報を確認,https://www2.deloitte.com/jp/ja/pages/about-deloitte/articles/audit/transparency-report.html,透明性報告書,非上場のため透明性報告書等で組織・品質管理情報を確認
+PwCコンサルティング,https://www.pwc.com/jp/ja/careers/new-graduate-cd.html,要確認,新卒採用情報,公式新卒採用サイトで募集部門・選考情報を確認,https://www.pwc.com/gx/en/about/global-annual-review.html,Global Annual Review,グローバル年次レビューで事業・人材・サステナビリティ情報を確認
+KPMGコンサルティング,https://recruit.kpmg-consulting.jp/new-graduate,確認済み,新卒採用情報,公式新卒採用サイトで募集部門・選考情報を確認,https://kpmg.com/jp/ja/home/about/governance/transparency-report.html,透明性報告書,非上場のため透明性報告書等で組織・品質管理情報を確認
+EYストラテジー・アンド・コンサルティング,https://www.ey.com/ja_jp/careers/students,要確認,学生・新卒採用情報,公式採用サイトで学生向け募集情報を確認,https://www.ey.com/en_gl/about-us/ey-value-realized,Value Realized,グローバルレポートで事業・人材・社会価値情報を確認
+ベイカレント,https://www.baycurrent.co.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集要項・選考情報を確認,https://www.baycurrent.co.jp/ir/library/,IRライブラリ,IRライブラリで決算・開示資料を確認
+アビームコンサルティング,https://www.abeam.com/jp/ja/careers/newgrads/,要確認,新卒採用情報,公式新卒採用サイトで職種・選考情報を確認,https://www.abeam.com/jp/ja/about/,会社情報,非上場のため会社情報・サステナビリティ情報を補助ソースとして確認
+野村総合研究所,https://working.nri.co.jp/,要確認,新卒採用情報,公式採用サイトで職種・選考情報を確認,https://ir.nri.com/jp/ir/library/integrated.html,統合レポート,統合レポートで事業戦略・人的資本・財務情報を確認
+三菱商事,https://career.mitsubishicorp.com/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集要項・イベント導線を確認,https://www.mitsubishicorp.com/jp/ja/ir/library/ar/,統合報告書,統合報告書で事業投資・財務・人的資本情報を確認
+三井物産,https://mitsui.i-web.jpn.com/2028/,確認済み,2028年度キャリア教育/新卒採用マイページ,2028年度向けの公式マイページ導線を確認,https://www.mitsui.com/jp/ja/ir/library/online2025/,統合報告書2025,統合報告書で事業ポートフォリオ・人的資本情報を確認
+伊藤忠商事,https://career.itochu.co.jp/student/information/index.html,要確認,募集要項・新卒採用情報,公式新卒採用サイトで職掌・応募要件・処遇を確認,https://www.itochu.co.jp/ja/ir/doc/annual_report/index.html,統合レポート,統合レポートで事業構造・人的資本・財務情報を確認
+住友商事,https://www.sumitomocorp.com/ja/jp/saiyo,要確認,新卒採用情報,公式採用サイトで募集情報・職掌を確認,https://www.sumitomocorp.com/ja/jp/ir/report/integrated-report,統合報告書,統合報告書で事業戦略・人的資本・財務情報を確認
+丸紅,https://www.marubeni.com/jp/recruit/,要確認,新卒採用情報,公式採用サイトで募集情報・イベントを確認,https://www.marubeni.com/jp/ir/reports/integrated_report/,統合報告書,統合報告書で事業ポートフォリオ・人的資本情報を確認
+豊田通商,https://www.toyota-tsusho-recruit.com/saiyo/,要確認,新卒採用情報,公式新卒採用サイトで募集職種・選考情報を確認,https://www.toyota-tsusho.com/ir/library/integrated-report/,統合レポート,統合レポートで事業戦略・財務・人的資本情報を確認
+双日,https://www.sojitz.com/jp/recruit/,要確認,新卒採用情報,公式採用サイトで募集情報を確認,https://www.sojitz.com/jp/ir/reports/integrated/,統合報告書,統合報告書で事業戦略・人的資本情報を確認
+兼松,https://www.kanematsu.co.jp/recruit/,要確認,新卒採用情報,公式採用サイトで募集要項を確認,https://www.kanematsu.co.jp/ir/library/integrated_report/,統合報告書,統合報告書で事業戦略・財務情報を確認
+三井住友銀行,https://www.smbc-freshers.com/,確認済み,新卒採用情報,公式新卒採用サイトで募集職種・選考情報を確認,https://www.smfg.co.jp/investor/library/annual/,統合報告書,SMFG統合報告書で銀行事業・人的資本情報を確認
+三菱UFJ銀行,https://www.saiyo.bk.mufg.jp/,要確認,新卒採用情報,公式新卒採用サイトで募集職種・選考情報を確認,https://www.mufg.jp/ir/report/disclosure/,統合報告書/ディスクロージャー誌,MUFG開示資料で銀行事業・人的資本情報を確認
+みずほフィナンシャルグループ,https://www.mizuho-fg.co.jp/saiyou/index.html,要確認,新卒採用情報,公式採用サイトで募集職種・選考情報を確認,https://www.mizuho-fg.co.jp/investors/financial/disclosure/index.html,統合報告書/ディスクロージャー誌,開示資料で銀行事業・人的資本情報を確認
+野村證券,https://www.nomura-recruit.jp/graduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種・選考情報を確認,https://www.nomuraholdings.com/jp/investor/library/ar/,統合報告書/アニュアルレポート,野村HDの統合報告書で証券事業・財務情報を確認
+大和証券,https://www.daiwa-grp-recruit.jp/,要確認,新卒採用情報,公式採用サイトで募集職種・選考情報を確認,https://www.daiwa-grp.jp/ir/toolkit/annualreport.html,統合報告書/アニュアルレポート,大和証券グループの統合報告書で事業・財務情報を確認
+SMBC日興証券,https://www.smbcnikko.co.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種・選考情報を確認,https://www.smfg.co.jp/investor/library/annual/,SMFG統合報告書,グループ開示資料で証券事業と人的資本情報を補完
+東京海上日動火災保険,https://www.saiyou.tokiomarine-nichido.co.jp/,要確認,新卒採用情報,公式新卒採用サイトで募集職種・選考情報を確認,https://www.tokiomarinehd.com/ir/library/annual_report/,統合レポート,東京海上HD統合レポートで保険事業・人的資本情報を確認
+三井住友海上火災保険,https://www.msig-saiyou.com/,要確認,新卒採用情報,公式新卒採用サイトで募集職種・選考情報を確認,https://www.ms-ad-hd.com/ja/ir/library/disclosure.html,統合レポート/ディスクロージャー誌,MS&AD開示資料で保険事業・人的資本情報を確認
+損害保険ジャパン,https://www.sompo-japan-saiyo.com/,要確認,新卒採用情報,公式新卒採用サイトで募集職種・選考情報を確認,https://www.sompo-hd.com/ir/data/disclosure/,統合レポート/ディスクロージャー誌,SOMPO HD開示資料で保険事業・人的資本情報を確認
+日本生命保険,https://www.nissay-saiyo.com/,要確認,新卒採用情報,公式新卒採用サイトで募集職種・選考情報を確認,https://www.nissay.co.jp/kaisha/annai/gyoseki/,業績・ディスクロージャー資料,相互会社のため業績・ディスクロージャー資料で経営情報を確認
+第一生命保険,https://www.dai-ichi-life-saiyo.jp/,要確認,新卒採用情報,公式新卒採用サイトで募集職種・選考情報を確認,https://www.dai-ichi-life-hd.com/investor/library/annual_report/,統合報告書,第一生命HD統合報告書で保険事業・人的資本情報を確認
+アコム,https://www.acom.co.jp/recruit/graduates/,確認済み,新卒採用情報,公式新卒採用サイトで募集職種・選考情報を確認,https://www.acom.co.jp/corp/ir/library/annual/,アニュアルレポート,IRライブラリで財務・事業情報を確認
+トヨタ自動車,https://www.toyota-recruit.com/saiyo/,要確認,新卒採用情報,公式新卒採用サイトで募集職種・選考情報を確認,https://global.toyota/jp/ir/library/annual/,統合報告書,統合報告書で事業戦略・人的資本・財務情報を確認
+本田技研工業,https://www.honda-recruit.jp/,要確認,新卒採用情報,公式新卒採用サイトで募集職種・選考情報を確認,https://global.honda/jp/investors/library/annual_report.html,統合報告書,統合報告書で四輪・二輪事業と人的資本情報を確認
+日産自動車,https://www.nissanmotor.jobs/japan/NE/,要確認,新卒採用情報,公式採用サイトで新卒募集情報を確認,https://www.nissan-global.com/JP/IR/LIBRARY/ANNUAL/,アニュアルレポート,IRライブラリで事業戦略・財務情報を確認
+マツダ,https://www.mazda.com/ja/careers/newgraduate-1/recruitment/entry-2028,確認済み,2028年度新卒採用エントリー,公式2028年度新卒採用エントリー導線を確認,https://www.mazda.com/ja/investors/library/annual/,統合報告書,統合報告書で事業戦略・人的資本情報を確認
+スズキ,https://saiyo.suzuki.co.jp/,要確認,新卒採用情報,公式採用サイトで募集職種・選考情報を確認,https://www.suzuki.co.jp/ir/library/annualreport/,統合報告書,統合報告書で事業戦略・財務情報を確認
+SUBARU,https://www.subaru.co.jp/jinji/guide/,要確認,新卒採用情報,公式採用サイトで募集職種・選考情報を確認,https://www.subaru.co.jp/ir/library/annual-reports.html,統合レポート/アニュアルレポート,IRライブラリで事業戦略・財務情報を確認
+デンソー,https://www.denso.com/jp/ja/careers/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種・選考情報を確認,https://www.denso.com/jp/ja/about-us/investors/library/annual-report/,統合報告書,統合報告書で事業戦略・人的資本情報を確認
+アイシン,https://www.aisin.com/jp/recruit/,要確認,新卒採用情報,公式採用サイトで募集職種・選考情報を確認,https://www.aisin.com/jp/investors/library/annual/,統合報告書,統合報告書で事業戦略・財務情報を確認

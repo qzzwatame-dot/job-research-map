@@ -1,0 +1,51 @@
+company,recruit_url,recruit_status,recruit_title,recruit_summary,ir_url,ir_title,ir_summary
+SCSK,https://www.scsk.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種と選考情報を確認,https://www.scsk.jp/ir/library/annual.html,統合報告書,統合報告書でSI事業と人的資本情報を確認
+TIS,https://www.tis.co.jp/recruit/graduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種と選考情報を確認,https://www.tis.co.jp/ir/library/annual_report/,統合報告書,統合報告書で決済とITサービス事業を確認
+BIPROGY,https://www.biprogy.com/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.biprogy.com/ir/library/annual_report.html,統合報告書,統合報告書で社会基盤ITと人的資本情報を確認
+伊藤忠テクノソリューションズ,https://www.ctc-g.co.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.ctc-g.co.jp/company/ir/library/annual/,統合報告書,統合報告書でクラウドとITインフラ事業を確認
+日本IBM,https://www.ibm.com/jp-ja/careers/entry-level,要確認,新卒/学生向け採用情報,公式採用サイトで学生向け募集情報を確認,https://www.ibm.com/annualreport/,Annual Report,グローバル年次報告で事業と技術戦略を確認
+日本マイクロソフト,https://careers.microsoft.com/students/us/en/japan,要確認,学生向け採用情報,公式採用サイトで学生向け募集情報を確認,https://www.microsoft.com/investor/reports/ar25/,Annual Report 2025,グローバル年次報告でクラウドとAI事業を確認
+オービック,https://www.obic.co.jp/recruit/,要確認,新卒採用情報,公式採用サイトで募集職種を確認,https://www.obic.co.jp/ir/library/annualreport.html,統合報告書,統合報告書でERP事業と高収益性を確認
+GMOインターネットグループ,https://www.gmo.jp/recruit/,要確認,採用情報,公式採用サイトで募集情報を確認,https://ir.gmo.jp/library/annual/,統合報告書,統合報告書でインターネットインフラと金融事業を確認
+日本総合研究所,https://www.jri.co.jp/recruit/,要確認,採用情報,公式採用サイトでコンサルとIT職種を確認,https://www.smfg.co.jp/investor/library/annual/,SMFG統合報告書,グループ統合報告書で金融ITとシンクタンク機能を補完
+三菱UFJリサーチ&コンサルティング,https://www.murc.jp/recruit/,要確認,採用情報,公式採用サイトで研究員とコンサル職を確認,https://www.mufg.jp/ir/report/disclosure/,MUFG統合報告書/開示資料,グループ開示資料で事業基盤を補完
+三菱総合研究所,https://www.mri.co.jp/recruit/,要確認,採用情報,公式採用サイトで研究員とコンサル職を確認,https://www.mri.co.jp/ir/library/annualreport/,統合報告書,統合報告書で政策研究とDX事業を確認
+ドリームインキュベータ,https://www.dreamincubator.co.jp/recruit/,要確認,採用情報,公式採用サイトで戦略コンサルと事業創造職を確認,https://www.dreamincubator.co.jp/ir/library/,IRライブラリ,IR資料で事業創造と投資領域を確認
+りそな銀行,https://www.resona-gr.co.jp/holdings/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.resona-gr.co.jp/holdings/investors/ir/disclosure/,統合報告書/ディスクロージャー誌,開示資料で銀行事業と人的資本情報を確認
+ゆうちょ銀行,https://www.jp-bank.japanpost.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集情報を確認,https://www.jp-bank.japanpost.jp/ir/financial/annualreport/,統合報告書,統合報告書で銀行事業と公共性を確認
+かんぽ生命保険,https://www.jp-life.japanpost.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集情報を確認,https://www.jp-life.japanpost.jp/IR/library/disclosure/,統合報告書/ディスクロージャー誌,開示資料で生命保険事業と財務情報を確認
+明治安田生命保険,https://www.meijiyasuda-saiyo.com/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.meijiyasuda.co.jp/profile/corporate_info/disclosure/,ディスクロージャー誌,相互会社の開示資料で経営情報と人的資本を確認
+住友生命保険,https://www.sumitomolife.co.jp/about/employ/saiyo/,要確認,新卒採用情報,公式採用サイトで募集職種を確認,https://www.sumitomolife.co.jp/about/company/disclosure/,ディスクロージャー誌,開示資料で生命保険事業と経営情報を確認
+オリックス,https://www.orix.co.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.orix.co.jp/grp/company/ir/library/annual_report/,統合報告書,統合報告書で金融サービスと事業投資を確認
+三井住友カード,https://www.smbc-card.com/company/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.smfg.co.jp/investor/library/annual/,SMFG統合報告書,グループ開示資料で決済事業と人的資本情報を補完
+日本政策投資銀行,https://www.dbj.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.dbj.jp/ir/library/annual/,統合報告書,統合報告書で投融資と社会インフラ支援を確認
+ヤマハ発動機,https://global.yamaha-motor.com/jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://global.yamaha-motor.com/jp/ir/library/annual/,統合報告書,統合報告書で二輪とマリン事業を確認
+川崎重工業,https://www.khi.co.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.khi.co.jp/ir/library/annualreport/,統合報告書,統合報告書で航空宇宙とエネルギー事業を確認
+IHI,https://www.ihi.co.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.ihi.co.jp/ir/library/annual_report/,統合報告書,統合報告書で航空エンジンと社会基盤事業を確認
+三菱重工業,https://www.mhi.com/jp/recruit/shinsotsu/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.mhi.com/jp/finance/library/annual,統合報告書,統合報告書で防衛とエネルギーと産業機械を確認
+島津製作所,https://www.shimadzu.co.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.shimadzu.co.jp/ir/library/annual.html,統合報告書,統合報告書で計測機器と医用機器事業を確認
+セイコーエプソン,https://corporate.epson/ja/careers/newgraduates/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://corporate.epson/ja/investors/ir-library/annual-report/,統合報告書,統合報告書でプリンティングと精密機器事業を確認
+ルネサスエレクトロニクス,https://www.renesas.com/jp/ja/about/careers/new-graduates,要確認,新卒採用情報,公式採用サイトで新卒募集情報を確認,https://www.renesas.com/jp/ja/about/investor-relations/ir-library/annual-reports,アニュアルレポート,IR資料で車載と産業向け半導体事業を確認
+ローム,https://www.rohm.co.jp/recruit/newgraduate,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.rohm.co.jp/ir/library/annual-report,統合報告書,統合報告書でアナログ半導体と電子部品事業を確認
+SCREENホールディングス,https://www.screen.co.jp/recruit/fresh/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.screen.co.jp/ir/library/annual,統合報告書,統合報告書で半導体製造装置事業を確認
+アドバンテスト,https://www.advantest.com/ja/careers/new-graduate/,要確認,新卒採用情報,公式採用サイトで新卒募集情報を確認,https://www.advantest.com/ja/investors/library/annual-report/,統合報告書,統合報告書で半導体テスター事業を確認
+ディスコ,https://www.disco.co.jp/recruit/,要確認,採用情報,公式採用サイトで募集情報を確認,https://www.disco.co.jp/ir/library/annualreport/,アニュアルレポート,IR資料で半導体加工装置事業と高収益性を確認
+カゴメ,https://www.kagome.co.jp/company/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集情報を確認,https://www.kagome.co.jp/company/ir/library/annualreport/,統合報告書,統合報告書で食品事業とサステナビリティを確認
+森永乳業,https://www.morinagamilk.co.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集情報を確認,https://www.morinagamilk.co.jp/ir/library/annual.html,統合報告書,統合報告書で乳製品と機能性食品事業を確認
+江崎グリコ,https://www.glico.com/jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集情報を確認,https://www.glico.com/jp/company/ir/library/annualreport/,統合報告書,統合報告書で菓子と食品事業を確認
+キッコーマン,https://www.kikkoman.com/jp/corporate/careers/newgraduate/,要確認,新卒採用情報,公式採用サイトで募集情報を確認,https://www.kikkoman.com/jp/ir/library/annualreport/,統合報告書,統合報告書で海外食品展開と財務情報を確認
+P&Gジャパン,https://japan.pgcareers.com/graduates,要確認,新卒採用情報,公式採用サイトで学生向け募集情報を確認,https://www.pginvestor.com/financial-reporting/annual-reports/default.aspx,Annual Report,グローバル年次報告で消費財事業と人材情報を確認
+協和キリン,https://www.kyowakirin.co.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://ir.kyowakirin.com/ja/library/annual.html,統合報告書,統合報告書でバイオ医薬品と研究開発情報を確認
+小野薬品工業,https://www.ono-pharma.com/ja/recruit/newgraduate,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.ono-pharma.com/ja/ir/library/annual-report,統合報告書,統合報告書でがん免疫領域と研究開発情報を確認
+テルモ,https://www.terumo.co.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.terumo.co.jp/investors/library/annual_report,統合報告書,統合報告書で医療機器事業と人的資本情報を確認
+東宝,https://www.toho.co.jp/recruit/newgraduate/,要確認,新卒採用情報,公式採用サイトで募集情報を確認,https://www.toho.co.jp/ir/library/annual-report,統合報告書,統合報告書で映画と演劇と不動産事業を確認
+ソニー・ミュージックグループ,https://saiyo.sme.co.jp/graduate/,要確認,新卒採用情報,公式新卒採用サイトで募集情報を確認,https://www.sony.com/ja/SonyInfo/IR/library/presen/annual_report/,ソニーグループ統合報告書,グループ統合報告書で音楽とIP事業を補完
+テレビ朝日,https://company.tv-asahi.co.jp/saiyo/shinsotsu/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.tv-asahihd.co.jp/ir/library/annual.html,統合報告書,統合報告書で放送とコンテンツ事業を確認
+TBSテレビ,https://www.tbsholdings.co.jp/recruit/,要確認,採用情報,公式採用サイトで募集情報を確認,https://www.tbsholdings.co.jp/ir/library/annual/,統合報告書,TBS HD統合報告書でメディアとコンテンツ事業を確認
+JR西日本,https://www.westjr.co.jp/company/recruit/fresh/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.westjr.co.jp/company/ir/library/annual-report/,統合報告書,統合報告書で鉄道と地域共創事業を確認
+JR東海,https://saiyo.jr-central.co.jp/,要確認,新卒採用情報,公式採用サイトで募集職種を確認,https://company.jr-central.co.jp/ir/annualreport/,統合報告書,統合報告書で東海道新幹線と中央新幹線事業を確認
+NTT都市開発,https://www.nttud.co.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集情報を確認,https://www.nttud.co.jp/ir/library/annualreport/,統合報告書,統合報告書で都市開発とNTTグループ連携を確認
+森ビル,https://www.mori.co.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集情報を確認,https://www.mori.co.jp/company/ir/,会社/IR情報,非上場に近い開示環境のため会社情報とIR関連情報で都市開発事業を確認
+鹿島建設,https://www.kajima.co.jp/prof/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.kajima.co.jp/ir/library/annual_report/,統合報告書,統合報告書で建設と開発事業を確認
+大成建設,https://www.taisei.co.jp/saiyo/new/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.taisei.co.jp/about_us/wn/ir/library/annual_report/,統合報告書,統合報告書で建設事業と人的資本情報を確認
+関西電力,https://www.kepco.co.jp/recruit/newgraduate/,要確認,新卒採用情報,公式新卒採用サイトで募集職種を確認,https://www.kepco.co.jp/ir/library/annual/,統合報告書,統合報告書で電力事業と脱炭素戦略を確認
