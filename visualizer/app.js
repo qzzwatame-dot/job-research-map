@@ -1319,7 +1319,7 @@ async function signInWithGoogle() {
   await state.supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: window.location.href.split("#")[0],
+      redirectTo: window.JOB_RESEARCH_SUPABASE?.redirectUrl || window.location.href.split("#")[0],
     },
   });
 }
