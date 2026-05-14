@@ -5,3 +5,5 @@ __pycache__/
 .codex/
 node_modules/
 job_research.db
+data/link_check_issues.csv
+data/link_check_report.json

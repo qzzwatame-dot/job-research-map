@@ -720,7 +720,9 @@ function renderDetail(company) {
   if (company.mypage_url) {
     els.mypageLink.hidden = false;
     els.mypageLink.href = normalizeUrl(company.mypage_url);
-    els.mypageLink.textContent = company.mypage_2028_status === "確認済み" ? "新卒マイページ" : "採用ページ確認";
+    els.mypageLink.textContent = isSearchUrl(company.mypage_url)
+      ? "新卒採用を検索"
+      : company.mypage_2028_status === "確認済み" ? "新卒マイページ" : "採用ページ確認";
   } else {
     els.mypageLink.hidden = true;
     els.mypageLink.href = "#";
@@ -1575,13 +1577,14 @@ function renderSourceList(company) {
     const label = scoreKeys.find(([key]) => key === source.score_key)?.[1] || source.score_key;
     const sourceUrl = source.url ? normalizeUrl(source.url) : "";
     const searchUrl = officialSearchUrl(company.company, source);
+    const searchOnly = sourceUrl && isSearchUrl(sourceUrl);
     return `
       <div class="mini-item">
         <strong>${source.title}</strong>
         <small>${label} / ${source.source_type} / 信頼度 ${source.reliability_score}${source.imported ? " / DB登録済み" : ""}${source.checked_date ? ` / ${source.checked_date}` : ""}</small>
         <small class="source-actions">
-          ${sourceUrl ? `<a href="${escapeAttr(sourceUrl)}" target="_blank" rel="noreferrer">ソースを開く</a>` : ""}
-          <a href="${escapeAttr(searchUrl)}" target="_blank" rel="noreferrer">${sourceUrl ? "見つからない場合は検索" : "公式情報を検索"}</a>
+          ${sourceUrl && !searchOnly ? `<a href="${escapeAttr(sourceUrl)}" target="_blank" rel="noreferrer">ソースを開く</a>` : ""}
+          <a href="${escapeAttr(searchOnly ? sourceUrl : searchUrl)}" target="_blank" rel="noreferrer">${sourceUrl && !searchOnly ? "見つからない場合は検索" : "公式情報を検索"}</a>
         </small>
         ${source.evidence_summary ? `<small>${source.evidence_summary}</small>` : ""}
         ${source.manualIndex === undefined ? "" : `<button class="delete-button mini-delete" type="button" data-index="${source.manualIndex}">削除</button>`}
@@ -1855,6 +1858,10 @@ function officialSearchUrl(companyName, source) {
     queryParts.push(type || title || "公式");
   }
   return `https://www.google.com/search?q=${encodeURIComponent(queryParts.join(" "))}`;
+}
+
+function isSearchUrl(url) {
+  return /^https:\/\/www\.google\.com\/search\?/i.test(normalizeUrl(url));
 }
 
 function industrySummaries(companies) {
