@@ -942,6 +942,12 @@ tbody tr.is-selected {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
 }
 
+.source-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+}
+
 .axis-label {
   fill: #607074;
   font-size: 11px;

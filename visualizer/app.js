@@ -158,6 +158,7 @@ const state = {
   interestedCompanies: {},
   selected: null,
   selectedIndustry: "",
+  activeTooltipKey: "",
   view: "home",
   filters: {
     industry: "すべて",
@@ -556,9 +557,16 @@ function renderCompanyMap(data) {
 
   for (const node of nodes) {
     const glyph = companyGlyph(node);
-    glyph.addEventListener("click", () => selectCompany(node.d));
-    glyph.addEventListener("mousemove", (event) => showTooltip(event, companyTooltip(node.d)));
-    glyph.addEventListener("mouseleave", hideTooltip);
+    glyph.addEventListener("click", (event) => {
+      selectCompany(node.d);
+      if (usesTapTooltip()) toggleTooltip(event, node.d.company, companyTooltip(node.d));
+    });
+    glyph.addEventListener("mousemove", (event) => {
+      if (!usesTapTooltip()) showTooltip(event, companyTooltip(node.d), node.d.company);
+    });
+    glyph.addEventListener("mouseleave", () => {
+      if (!usesTapTooltip()) hideTooltip();
+    });
     svg.appendChild(glyph);
   }
 
@@ -1565,11 +1573,16 @@ function renderSourceList(company) {
   const sources = getSources(company);
   els.sourceList.innerHTML = sources.map((source) => {
     const label = scoreKeys.find(([key]) => key === source.score_key)?.[1] || source.score_key;
+    const sourceUrl = source.url ? normalizeUrl(source.url) : "";
+    const searchUrl = officialSearchUrl(company.company, source);
     return `
       <div class="mini-item">
         <strong>${source.title}</strong>
         <small>${label} / ${source.source_type} / 信頼度 ${source.reliability_score}${source.imported ? " / DB登録済み" : ""}${source.checked_date ? ` / ${source.checked_date}` : ""}</small>
-        ${source.url ? `<small><a href="${escapeAttr(source.url)}" target="_blank" rel="noreferrer">ソースを開く</a></small>` : ""}
+        <small class="source-actions">
+          ${sourceUrl ? `<a href="${escapeAttr(sourceUrl)}" target="_blank" rel="noreferrer">ソースを開く</a>` : ""}
+          <a href="${escapeAttr(searchUrl)}" target="_blank" rel="noreferrer">${sourceUrl ? "見つからない場合は検索" : "公式情報を検索"}</a>
+        </small>
         ${source.evidence_summary ? `<small>${source.evidence_summary}</small>` : ""}
         ${source.manualIndex === undefined ? "" : `<button class="delete-button mini-delete" type="button" data-index="${source.manualIndex}">削除</button>`}
       </div>
@@ -1802,17 +1815,46 @@ function companyTooltip(d) {
   return `<strong>${d.company}</strong><br>${oneLineComment(d)}<br>業界内優位 ${industryAdvantageScore(d).toFixed(2)} / あなた向け ${d.personal_score.toFixed(2)}<br>横: 安定性←→成長性 / 縦: 働きやすさ←→キャリア資本<br>${d.mypage_2028_status} / ${getPersonalEntry(d.company).status}`;
 }
 
-function showTooltip(event, html) {
+function showTooltip(event, html, key = "") {
   els.tooltip.innerHTML = html;
   els.tooltip.hidden = false;
-  const x = Math.min(event.clientX + 14, window.innerWidth - 300);
-  const y = Math.min(event.clientY + 14, window.innerHeight - 120);
+  state.activeTooltipKey = key;
+  const tooltipWidth = Math.min(270, window.innerWidth - 24);
+  const x = clamp(event.clientX + 14, 12, window.innerWidth - tooltipWidth - 12);
+  const y = clamp(event.clientY + 14, 12, window.innerHeight - 120);
   els.tooltip.style.left = `${x}px`;
   els.tooltip.style.top = `${y}px`;
 }
 
 function hideTooltip() {
   els.tooltip.hidden = true;
+  state.activeTooltipKey = "";
+}
+
+function toggleTooltip(event, key, html) {
+  if (!els.tooltip.hidden && state.activeTooltipKey === key) {
+    hideTooltip();
+    return;
+  }
+  showTooltip(event, html, key);
+}
+
+function usesTapTooltip() {
+  return window.matchMedia("(hover: none), (pointer: coarse)").matches;
+}
+
+function officialSearchUrl(companyName, source) {
+  const type = source.source_type || "";
+  const title = source.title || "";
+  const queryParts = [companyName];
+  if (type.includes("IR") || title.includes("統合") || title.includes("報告")) {
+    queryParts.push("IR", "統合報告書", "2025");
+  } else if (type.includes("採用") || title.includes("マイページ")) {
+    queryParts.push("新卒採用", "マイページ");
+  } else {
+    queryParts.push(type || title || "公式");
+  }
+  return `https://www.google.com/search?q=${encodeURIComponent(queryParts.join(" "))}`;
 }
 
 function industrySummaries(companies) {
