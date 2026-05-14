@@ -548,6 +548,36 @@ body.profile-mode .profile-timeline-panel {
   line-height: 1.45;
 }
 
+.sync-box {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfb;
+}
+
+.sync-box strong,
+.sync-box small {
+  display: block;
+}
+
+.sync-box small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.sync-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
 .timeline-summary {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1090,6 +1120,19 @@ tbody tr.is-selected {
   .detail-tabs,
   .profile-actions {
     grid-template-columns: 1fr;
+  }
+
+  .sync-box {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .sync-actions {
+    justify-content: stretch;
+  }
+
+  .sync-actions button {
+    flex: 1;
   }
 
   th,

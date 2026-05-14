@@ -156,6 +156,10 @@ const state = {
   sourceData: {},
   evidenceSources: {},
   interestedCompanies: {},
+  supabase: null,
+  authUser: null,
+  cloudReady: false,
+  syncing: false,
   selected: null,
   selectedIndustry: "",
   activeTooltipKey: "",
@@ -199,6 +203,10 @@ const els = {
   saveApplicantProfile: document.querySelector("#saveApplicantProfile"),
   runApplicantAnalysis: document.querySelector("#runApplicantAnalysis"),
   profileStatus: document.querySelector("#profileStatus"),
+  syncStatus: document.querySelector("#syncStatus"),
+  googleSignIn: document.querySelector("#googleSignIn"),
+  syncNow: document.querySelector("#syncNow"),
+  signOut: document.querySelector("#signOut"),
   industryStatusList: document.querySelector("#industryStatusList"),
   mapLegend: document.querySelector("#mapLegend"),
   companyMap: document.querySelector("#companyMap"),
@@ -279,6 +287,7 @@ async function init() {
   state.sourceData = loadStorageMap("jobResearchSourceData");
   state.evidenceSources = groupByCompany(evidenceSources);
   state.interestedCompanies = loadStorageMap("jobResearchInterestedCompanies");
+  await setupSupabaseSync();
   state.selected = [...state.companies].sort((a, b) => b.overall_score - a.overall_score)[0];
   state.selectedIndustry = state.selected.industry;
   setupControls();
@@ -414,6 +423,9 @@ function setupControls() {
   els.sourceReliability.addEventListener("input", () => {
     els.sourceReliabilityLabel.textContent = els.sourceReliability.value;
   });
+  els.googleSignIn.addEventListener("click", signInWithGoogle);
+  els.signOut.addEventListener("click", signOutCloud);
+  els.syncNow.addEventListener("click", () => saveCloudData({ immediate: true }));
   window.addEventListener("resize", debounce(renderAll, 120));
 }
 
@@ -756,7 +768,7 @@ function toggleInterestedCompany(company) {
     };
     showToast(`${company.company}を志望リストに追加しました`);
   }
-  localStorage.setItem("jobResearchInterestedCompanies", JSON.stringify(state.interestedCompanies));
+  saveStorageMap("jobResearchInterestedCompanies", state.interestedCompanies);
   renderAll();
 }
 
@@ -1170,7 +1182,7 @@ function saveApplicantProfile() {
     condition_summary: els.conditionSummary.value.trim(),
   };
   state.applicantSignals = analyzeApplicantProfile(state.applicantProfile);
-  localStorage.setItem("jobResearchApplicantProfile", JSON.stringify(state.applicantProfile));
+  saveStorageMap("jobResearchApplicantProfile", state.applicantProfile);
 }
 
 function showProfileStatus(message) {
@@ -1254,7 +1266,7 @@ function saveSelectedPersonalData() {
     next_deadline: els.nextDeadline.value,
     personal_memo: els.personalMemo.value,
   };
-  localStorage.setItem("jobResearchPersonalData", JSON.stringify(state.personalData));
+  saveStorageMap("jobResearchPersonalData", state.personalData);
   showToast(`${state.selected.company}の応募状況を保存しました`);
 }
 
@@ -1268,6 +1280,152 @@ function loadStorageMap(key) {
   } catch {
     return {};
   }
+}
+
+function saveStorageMap(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+  scheduleCloudSave();
+}
+
+async function setupSupabaseSync() {
+  const config = window.JOB_RESEARCH_SUPABASE || {};
+  const canUseSupabase = Boolean(config.url && config.anonKey && window.supabase);
+  if (!canUseSupabase) {
+    state.cloudReady = false;
+    updateSyncStatus("ローカル保存のみ");
+    return;
+  }
+  state.supabase = window.supabase.createClient(config.url, config.anonKey);
+  const { data } = await state.supabase.auth.getSession();
+  state.authUser = data.session?.user || null;
+  state.cloudReady = Boolean(state.authUser);
+  if (state.authUser) await loadCloudData();
+  updateSyncStatus();
+  state.supabase.auth.onAuthStateChange(async (_event, session) => {
+    state.authUser = session?.user || null;
+    state.cloudReady = Boolean(state.authUser);
+    if (state.authUser) await loadCloudData();
+    updateSyncStatus();
+    renderAll();
+  });
+}
+
+async function signInWithGoogle() {
+  if (!state.supabase) {
+    showToast("Supabase設定が未登録です");
+    updateSyncStatus("Supabase設定が未登録です");
+    return;
+  }
+  await state.supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: window.location.href.split("#")[0],
+    },
+  });
+}
+
+async function signOutCloud() {
+  if (!state.supabase) return;
+  await state.supabase.auth.signOut();
+  state.authUser = null;
+  state.cloudReady = false;
+  updateSyncStatus("ログアウトしました。ローカル保存のみ");
+}
+
+async function loadCloudData() {
+  if (!state.supabase || !state.authUser) return;
+  updateSyncStatus("クラウドデータ読込中");
+  const { data, error } = await state.supabase
+    .from("user_job_research_profiles")
+    .select("applicant_profile, personal_data, event_data, source_data, interested_companies")
+    .eq("user_id", state.authUser.id)
+    .maybeSingle();
+  if (error) {
+    updateSyncStatus("クラウド読込に失敗");
+    return;
+  }
+  if (!data) {
+    await saveCloudData({ immediate: true, silent: true });
+    updateSyncStatus();
+    return;
+  }
+  state.applicantProfile = { ...defaultApplicantProfile(), ...(data.applicant_profile || {}) };
+  state.filters.presetMode = state.applicantProfile.preference_preset || state.filters.presetMode;
+  state.applicantSignals = analyzeApplicantProfile(state.applicantProfile);
+  state.personalData = data.personal_data || {};
+  state.eventData = data.event_data || {};
+  state.sourceData = data.source_data || {};
+  state.interestedCompanies = data.interested_companies || {};
+  persistAllLocalData();
+  renderApplicantProfileForm();
+  updateSyncStatus();
+}
+
+function persistAllLocalData() {
+  localStorage.setItem("jobResearchApplicantProfile", JSON.stringify(state.applicantProfile));
+  localStorage.setItem("jobResearchPersonalData", JSON.stringify(state.personalData));
+  localStorage.setItem("jobResearchEventData", JSON.stringify(state.eventData));
+  localStorage.setItem("jobResearchSourceData", JSON.stringify(state.sourceData));
+  localStorage.setItem("jobResearchInterestedCompanies", JSON.stringify(state.interestedCompanies));
+}
+
+function scheduleCloudSave() {
+  if (!state.cloudReady || !state.authUser || !state.supabase) return;
+  window.clearTimeout(scheduleCloudSave.timer);
+  scheduleCloudSave.timer = window.setTimeout(() => saveCloudData(), 800);
+}
+
+async function saveCloudData(options = {}) {
+  if (!state.supabase || !state.authUser) {
+    if (!options.silent) updateSyncStatus("ログインするとスマホ/PCで同期できます");
+    return;
+  }
+  if (state.syncing) return;
+  state.syncing = true;
+  if (options.immediate && !options.silent) updateSyncStatus("同期中");
+  const payload = {
+    user_id: state.authUser.id,
+    applicant_profile: state.applicantProfile || {},
+    personal_data: state.personalData || {},
+    event_data: state.eventData || {},
+    source_data: state.sourceData || {},
+    interested_companies: state.interestedCompanies || {},
+  };
+  const { error } = await state.supabase
+    .from("user_job_research_profiles")
+    .upsert(payload, { onConflict: "user_id" });
+  state.syncing = false;
+  if (error) {
+    updateSyncStatus("同期に失敗");
+    if (!options.silent) showToast("Supabase同期に失敗しました");
+    return;
+  }
+  updateSyncStatus();
+  if (options.immediate && !options.silent) showToast("クラウド同期しました");
+}
+
+function updateSyncStatus(message = "") {
+  if (!els.syncStatus) return;
+  const configured = Boolean(window.JOB_RESEARCH_SUPABASE?.url && window.JOB_RESEARCH_SUPABASE?.anonKey && window.supabase);
+  if (!configured) {
+    els.syncStatus.textContent = message || "Supabase未設定。現在はローカル保存のみ";
+    els.googleSignIn.disabled = true;
+    els.syncNow.disabled = true;
+    els.signOut.hidden = true;
+    return;
+  }
+  if (!state.authUser) {
+    els.syncStatus.textContent = message || "未ログイン。Googleログインで同期できます";
+    els.googleSignIn.hidden = false;
+    els.googleSignIn.disabled = false;
+    els.syncNow.disabled = true;
+    els.signOut.hidden = true;
+    return;
+  }
+  els.syncStatus.textContent = message || `${state.authUser.email || "Googleアカウント"}で同期中`;
+  els.googleSignIn.hidden = true;
+  els.syncNow.disabled = false;
+  els.signOut.hidden = false;
 }
 
 function setDetailTab(tabName) {
@@ -1462,7 +1620,7 @@ function buildProfileTimelineItems() {
 function deleteTimelineItem(kind, companyName, indexValue) {
   if (kind === "application") {
     delete state.personalData[companyName];
-    localStorage.setItem("jobResearchPersonalData", JSON.stringify(state.personalData));
+    saveStorageMap("jobResearchPersonalData", state.personalData);
     showToast(`${companyName}の応募状況を削除しました`);
   } else if (kind === "event") {
     deleteStoredListItem(state.eventData, "jobResearchEventData", companyName, Number(indexValue));
@@ -1478,7 +1636,7 @@ function deleteStoredListItem(store, storageKey, companyName, index) {
   if (!Number.isInteger(index) || !store[companyName]) return;
   store[companyName].splice(index, 1);
   if (!store[companyName].length) delete store[companyName];
-  localStorage.setItem(storageKey, JSON.stringify(store));
+  saveStorageMap(storageKey, store);
 }
 
 function getEvents(company) {
@@ -1537,7 +1695,7 @@ function addSelectedEvent() {
     notes: els.eventNotes.value.trim(),
   });
   state.eventData[company] = events;
-  localStorage.setItem("jobResearchEventData", JSON.stringify(state.eventData));
+  saveStorageMap("jobResearchEventData", state.eventData);
   els.eventTitle.value = "";
   els.eventDate.value = "";
   els.eventDeadline.value = "";
@@ -1613,7 +1771,7 @@ function addSelectedSource() {
     evidence_summary: els.sourceSummary.value.trim(),
   });
   state.sourceData[company] = sources;
-  localStorage.setItem("jobResearchSourceData", JSON.stringify(state.sourceData));
+  saveStorageMap("jobResearchSourceData", state.sourceData);
   els.sourceTitle.value = "";
   els.sourceUrl.value = "";
   els.sourceReliability.value = "3";
