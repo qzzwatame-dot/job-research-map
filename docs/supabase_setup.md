@@ -22,6 +22,7 @@ GitHub PagesのURLは、Supabaseの `Authentication` → `URL Configuration` に
 
 - Site URL: `https://qzzwatame-dot.github.io/job-research-map/visualizer/`
 - Redirect URLs: `https://qzzwatame-dot.github.io/job-research-map/visualizer/`
+- Redirect URLs: `https://qzzwatame-dot.github.io/job-research-map/planner/`
 
 ## 3. アプリにSupabase情報を入れる
 

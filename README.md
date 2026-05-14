@@ -23,6 +23,7 @@
 - `scripts/generate_initial_scores.py`: 100社候補から初期スコアを生成してDBへ反映するスクリプト
 - `docs/scoring_rubric.md`: スコア項目と重みの定義
 - `docs/personalization_model.md`: 企業DBと個人DBを組み合わせる設計メモ
+- `planner/`: 個人プロフィールと企業DBから今週応募すべき企業TOP10を出す応募優先順位メーカー
 - `visualizer/`: 100社スコアを業界マップ・企業比較・業界近接マップで見るブラウザUI
 
 ## すぐ試す
@@ -77,6 +78,14 @@ python3 -m http.server 8765
 ```text
 http://127.0.0.1:8765/visualizer/
 ```
+
+応募優先順位メーカーを開く場合:
+
+```text
+http://127.0.0.1:8765/planner/
+```
+
+`planner/` では、プロフィール、志向プリセット、応募状況、締切、志望リストから `あなたが今週動くべき企業TOP10`、次アクション、応募ボードを表示します。Supabase設定済みの場合は、同じGoogleアカウントでスマホ/PC間の個人データ同期もできます。
 
 可視化画面では、次を確認できます。
 

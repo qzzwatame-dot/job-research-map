@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>就活応募プランナー</title>
+    <link rel="stylesheet" href="./styles.css?v=20260514-1">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Application Priority Planner</p>
+        <h1>就活応募プランナー</h1>
+      </div>
+      <div class="top-actions">
+        <a class="ghost-link" href="../visualizer/">Research Map</a>
+        <button id="syncButton" type="button">Googleログイン</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="setup-panel" aria-label="自分の条件">
+        <section class="panel profile-panel">
+          <div class="panel-head">
+            <div>
+              <h2>Profile</h2>
+              <p id="syncStatus">ローカル保存のみ</p>
+            </div>
+            <button id="syncNow" class="text-button" type="button">同期</button>
+          </div>
+          <label class="field">
+            <span>志向プリセット</span>
+            <select id="presetMode">
+              <option value="balanced">総合バランス</option>
+              <option value="salary">高年収重視</option>
+              <option value="growthCareer">成長環境重視</option>
+              <option value="stability">安定重視</option>
+              <option value="workLife">ワークライフバランス重視</option>
+              <option value="engineer">理系技術職向け</option>
+              <option value="generalist">文系総合職向け</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>MBTI</span>
+            <select id="mbtiType">
+              <option value="">未設定</option>
+              <option>INTJ</option><option>INTP</option><option>ENTJ</option><option>ENTP</option>
+              <option>INFJ</option><option>INFP</option><option>ENFJ</option><option>ENFP</option>
+              <option>ISTJ</option><option>ISFJ</option><option>ESTJ</option><option>ESFJ</option>
+              <option>ISTP</option><option>ISFP</option><option>ESTP</option><option>ESFP</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>希望職種</span>
+            <input id="preferredJobTypes" type="text" placeholder="企画, SE, コンサル">
+          </label>
+          <label class="field">
+            <span>希望勤務地・条件</span>
+            <textarea id="conditionSummary" rows="3" placeholder="東京、転勤少なめ、海外志向、年収重視など"></textarea>
+          </label>
+          <label class="field">
+            <span>ES・自己PR素材</span>
+            <textarea id="esDraft" rows="4" placeholder="ガクチカ、研究、インターン、強み"></textarea>
+          </label>
+          <div class="slider-grid">
+            <label><span>変化耐性</span><input id="changeTolerance" type="range" min="1" max="5" value="3"></label>
+            <label><span>裁量志向</span><input id="autonomyPreference" type="range" min="1" max="5" value="3"></label>
+            <label><span>論理重視</span><input id="logicOrientation" type="range" min="1" max="5" value="3"></label>
+            <label><span>計画志向</span><input id="planningOrientation" type="range" min="1" max="5" value="3"></label>
+          </div>
+          <button id="saveProfile" class="primary-button" type="button">診断を更新</button>
+        </section>
+
+        <section class="panel filters-panel">
+          <h2>Focus</h2>
+          <label class="field">
+            <span>業界</span>
+            <select id="industryFilter"></select>
+          </label>
+          <label class="field">
+            <span>今週の行動量</span>
+            <select id="weeklyCapacity">
+              <option value="5">5社まで</option>
+              <option value="10" selected>10社まで</option>
+              <option value="15">15社まで</option>
+              <option value="25">25社まで</option>
+            </select>
+          </label>
+          <label class="checkline">
+            <input id="interestedOnly" type="checkbox">
+            <span>志望リストだけ</span>
+          </label>
+        </section>
+      </aside>
+
+      <section class="main-panel">
+        <section class="hero-panel">
+          <div>
+            <p class="eyebrow">This Week</p>
+            <h2>あなたが今週動くべき企業</h2>
+            <p id="plannerSummary">プロフィールと応募状況から優先順位を計算しています。</p>
+          </div>
+          <div class="hero-stats">
+            <div><strong id="statCompanies">0</strong><span>Companies</span></div>
+            <div><strong id="statReady">0</strong><span>Action Ready</span></div>
+            <div><strong id="statInterested">0</strong><span>Interested</span></div>
+          </div>
+        </section>
+
+        <section class="recommendation-grid" id="recommendationGrid"></section>
+
+        <section class="panel board-panel">
+          <div class="panel-head">
+            <div>
+              <h2>Application Board</h2>
+              <p>進捗別に応募候補を管理します。</p>
+            </div>
+          </div>
+          <div class="board" id="applicationBoard"></div>
+        </section>
+      </section>
+
+      <aside class="detail-panel">
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2 id="detailCompany">企業を選択</h2>
+              <p id="detailMeta">推薦カードを選ぶと詳細を表示します。</p>
+            </div>
+          </div>
+          <div id="detailScores" class="score-stack"></div>
+          <div class="action-box">
+            <label class="field compact">
+              <span>応募状況</span>
+              <select id="applicationStatus">
+                <option>未調査</option>
+                <option>調査中</option>
+                <option>マイページ登録済み</option>
+                <option>イベント参加予定</option>
+                <option>ES準備中</option>
+                <option>応募済み</option>
+                <option>選考中</option>
+                <option>内定</option>
+                <option>辞退候補</option>
+                <option>見送り</option>
+              </select>
+            </label>
+            <label class="field compact">
+              <span>次アクション</span>
+              <input id="nextAction" type="text" placeholder="ES作成、説明会予約など">
+            </label>
+            <label class="field compact">
+              <span>締切</span>
+              <input id="nextDeadline" type="date">
+            </label>
+            <div class="action-row">
+              <button id="saveApplication" type="button">保存</button>
+              <button id="toggleInterested" type="button">志望リスト追加</button>
+            </div>
+          </div>
+          <div id="detailReasons" class="reason-list"></div>
+          <div class="link-list" id="detailLinks"></div>
+        </section>
+
+        <section class="panel timeline-panel">
+          <h2>Next Actions</h2>
+          <div id="timelineList" class="timeline-list"></div>
+        </section>
+      </aside>
+    </main>
+
+    <div id="toast" class="toast" hidden></div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../visualizer/supabase-config.js?v=20260514-1"></script>
+    <script src="./app.js?v=20260514-1"></script>
+  </body>
+</html>
