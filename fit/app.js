@@ -35,11 +35,55 @@ const questions = [
   { text: "人気企業かどうかより、自分の伸び方に合うかを重視したい", axis: "selfFit", left: "人気も重要", right: "相性重視" },
 ];
 
+const choiceLabels = [
+  { value: 1, label: "かなり左" },
+  { value: 2, label: "やや左" },
+  { value: 3, label: "どちらでもない" },
+  { value: 4, label: "やや右" },
+  { value: 5, label: "かなり右" },
+];
+
+const axisDefinitions = [
+  {
+    id: "pace",
+    leftCode: "R",
+    rightCode: "D",
+    leftLabel: "安定志向",
+    rightLabel: "変化志向",
+    score: (vector) => avg([vector.change, vector.growth, 6 - vector.stability]),
+  },
+  {
+    id: "scope",
+    leftCode: "S",
+    rightCode: "B",
+    leftLabel: "専門深化",
+    rightLabel: "幅広経験",
+    score: (vector) => avg([vector.generalist, 6 - vector.technical]),
+  },
+  {
+    id: "lens",
+    leftCode: "H",
+    rightCode: "L",
+    leftLabel: "人間重視",
+    rightLabel: "論理重視",
+    score: (vector) => avg([vector.logic, 6 - vector.consumer, 6 - vector.story]),
+  },
+  {
+    id: "mode",
+    leftCode: "C",
+    rightCode: "I",
+    leftLabel: "協働志向",
+    rightLabel: "自走志向",
+    score: (vector) => avg([vector.autonomy, 6 - vector.team]),
+  },
+];
+
 const typeProfiles = [
   {
-    id: "growth",
-    name: "Growth Strategist",
-    label: "成長戦略タイプ",
+    code: "DBLI",
+    id: "strategist",
+    name: "Frontier Strategist",
+    label: "開拓戦略タイプ",
     tagline: "変化を読む、構造化する、自走して成果に変える人。",
     lead: "裁量、成長速度、論理性のある環境で伸びるタイプ。難度の高いテーマでも、自分で構造化しながら前に進むほど強みが出ます。",
     flow: ["違和感を見つける", "構造に分解する", "仮説で動く", "成果から学び直す"],
@@ -51,7 +95,128 @@ const typeProfiles = [
     script: "私は、変化のある状況でも課題を構造化し、仮説を立てて行動に移すことで成果につなげるタイプです。未経験のテーマでも学びながら前進できる点を強みとして活かしたいです。",
   },
   {
-    id: "stable",
+    code: "DBLC",
+    id: "producer",
+    name: "Venture Producer",
+    label: "事業推進タイプ",
+    tagline: "変化を捉え、構造を描き、人を動かして前進させる人。",
+    lead: "新しいテーマを俯瞰しながら、関係者を巻き込んで形にするタイプ。事業開発や組織横断の推進で強みが出ます。",
+    flow: ["機会を見つける", "構造を描く", "人を巻き込む", "事業を動かす"],
+    match: { change: 4.5, generalist: 4.4, logic: 4.4, team: 4.3, global: 4.2, ambition: 4.3 },
+    fit: ["事業開発、商社、コンサル、成長企業", "複数部署を巻き込むプロジェクト", "大きな裁量と連携が両立する環境"],
+    risk: ["分業が細かく全体像が見えない環境", "挑戦より前例踏襲が強い組織", "関係者を動かす余地が少ない職場"],
+    strengths: ["全体像から勝ち筋を描く力", "周囲を巻き込む推進力", "変化の中でも判断を前に進める点"],
+    stuck: ["担当範囲が狭く閉じている", "意思決定が遅く動けない", "部門間の壁が高い"],
+    script: "私は、変化のある状況で全体像を整理し、関係者を巻き込みながら前進させることが得意です。複雑なテーマを事業成果につなげる役割で力を発揮したいです。",
+  },
+  {
+    code: "DBHI",
+    id: "creator",
+    name: "Market Creator",
+    label: "市場創造タイプ",
+    tagline: "人の気持ちを読み、価値に変え、自分の手で形にする人。",
+    lead: "生活者や市場の変化を捉え、独自の切り口で企画に落とすタイプ。企画、ブランド、新規サービスで魅力が出ます。",
+    flow: ["反応を読む", "切り口を見つける", "形にする", "市場へ届ける"],
+    match: { change: 4.3, generalist: 4.2, consumer: 4.8, story: 4.6, autonomy: 4.2 },
+    fit: ["広告、消費財、メディア、ブランド企画", "生活者の反応が見える仕事", "個人の発想を試せる環境"],
+    risk: ["顧客から遠い仕事", "承認が重く試行回数が少ない職場", "数字だけで価値判断される環境"],
+    strengths: ["相手視点で価値を考える力", "魅力的な切り口を作る発想力", "自分で企画を前に進める点"],
+    stuck: ["表現の余地がない", "反応が見えない", "自由度が低い"],
+    script: "私は、生活者や顧客の反応を捉え、価値ある企画に変えることが得意です。人の気持ちを動かす商品やサービスづくりに関わりたいです。",
+  },
+  {
+    code: "DBHC",
+    id: "coCreator",
+    name: "Experience Connector",
+    label: "共創企画タイプ",
+    tagline: "人を理解し、場をつなぎ、体験を一緒に作る人。",
+    lead: "変化のある市場で、人の感情や関係性を起点に価値を作るタイプ。マーケティング、営業企画、イベント、コミュニティ運営と相性が良いです。",
+    flow: ["相手を知る", "共感を集める", "人をつなぐ", "体験にする"],
+    match: { change: 4.1, generalist: 4.3, consumer: 4.6, story: 4.5, team: 4.7 },
+    fit: ["消費財、広告、エンタメ、サービス企画", "顧客接点とチーム連携がある仕事", "共創を重視する環境"],
+    risk: ["一人で完結する仕事", "顧客理解より仕様優先の職場", "組織間の連携が薄い環境"],
+    strengths: ["相手の本音を汲み取る力", "周囲を巻き込む関係構築力", "価値を体験として届ける点"],
+    stuck: ["人との接点が薄い", "横連携が弱い", "顧客の声が届かない"],
+    script: "私は、人の気持ちを理解し、周囲と一緒に価値を形にすることに強みがあります。顧客に近い場所で、共感される体験づくりに関わりたいです。",
+  },
+  {
+    code: "DSLI",
+    id: "expert",
+    name: "Technical Pioneer",
+    label: "先端専門タイプ",
+    tagline: "深く理解し、素早く試し、専門性で未来を切り開く人。",
+    lead: "新しい技術や難度の高い課題を、自走しながら掘り下げるタイプ。IT、研究、データ、半導体などで伸びやすいです。",
+    flow: ["難問を掴む", "原理を掘る", "試作する", "突破口を作る"],
+    match: { change: 4.2, technical: 4.8, logic: 4.8, autonomy: 4.4, career: 4.4 },
+    fit: ["IT、研究開発、データ、先端メーカー", "専門性と裁量が両立する仕事", "新技術に触れ続けられる環境"],
+    risk: ["調整業務ばかりで手を動かせない職場", "変化が遅く学習機会が乏しい環境", "配属で専門がぶれやすい組織"],
+    strengths: ["複雑な課題を理解する力", "新しい知識を吸収する速さ", "専門性を成果につなげる点"],
+    stuck: ["深掘りの時間がない", "新しい挑戦が少ない", "専門が軽視される"],
+    script: "私は、難しいテーマを深く理解し、試行錯誤を通じて突破口を作ることが得意です。先端領域で専門性を磨きながら価値を出したいです。",
+  },
+  {
+    code: "DSLC",
+    id: "architect",
+    name: "Systems Architect",
+    label: "技術統合タイプ",
+    tagline: "専門性を軸に、人と仕組みをつなぎ、全体最適を作る人。",
+    lead: "深い理解を持ちながら、周囲と連携して複雑な仕組みを形にするタイプ。エンジニアリング、プロダクト、製造開発で活きます。",
+    flow: ["仕組みを読む", "論点を整理する", "周囲と接続する", "全体を設計する"],
+    match: { change: 4.0, technical: 4.6, logic: 4.6, team: 4.4, planning: 4.0 },
+    fit: ["プロダクト開発、製造開発、SI、技術企画", "専門職と事業側をつなぐ仕事", "協働しながら改善する環境"],
+    risk: ["専門と事業が分断された職場", "個人最適だけが評価される組織", "技術判断が軽視される環境"],
+    strengths: ["複雑な論点を整理する力", "専門家同士をつなぐ説明力", "仕組み全体を良くする視点"],
+    stuck: ["部分最適で終わる", "連携が悪い", "技術の意図が伝わらない"],
+    script: "私は、専門的な内容を整理し、関係者と共有しながら全体として良い形にまとめることが得意です。技術と事業をつなぐ役割で貢献したいです。",
+  },
+  {
+    code: "DSHI",
+    id: "artisan",
+    name: "Independent Artisan",
+    label: "創作専門タイプ",
+    tagline: "感性を深め、技を磨き、自分だけの価値を作る人。",
+    lead: "一つの領域を深く掘りながら、人に届く表現や品質を追求するタイプ。デザイン、編集、研究、商品開発などで強みが出ます。",
+    flow: ["違和感を掴む", "深く掘る", "磨き込む", "作品にする"],
+    match: { change: 4.0, technical: 3.8, story: 4.6, consumer: 4.2, autonomy: 4.5, generalist: 2.2 },
+    fit: ["デザイン、編集、商品開発、研究企画", "感性と専門性を磨ける仕事", "個人のこだわりを活かせる環境"],
+    risk: ["量だけが重視される職場", "専門性より調整が中心の仕事", "表現の自由度が低い環境"],
+    strengths: ["細部まで磨き込む力", "感覚を形にする表現力", "自分の軸で品質を高める点"],
+    stuck: ["こだわりを持てない", "浅い対応が続く", "自由度がない"],
+    script: "私は、一つの領域を深く掘り下げ、相手に届く品質まで磨き込むことに強みがあります。専門性と感性を活かして価値を作りたいです。",
+  },
+  {
+    code: "DSHC",
+    id: "coach",
+    name: "Human Specialist",
+    label: "支援専門タイプ",
+    tagline: "人を深く理解し、専門性で支え、成長を後押しする人。",
+    lead: "人への関心と専門性を両立するタイプ。医療、ヘルスケア、人事、教育、顧客支援のような領域で力を発揮します。",
+    flow: ["相手を理解する", "背景を掘る", "専門で支える", "成長を促す"],
+    match: { change: 3.8, technical: 3.9, consumer: 4.1, story: 4.3, team: 4.7, generalist: 2.4 },
+    fit: ["医療、ヘルスケア、人事、教育、顧客支援", "人に近い専門職", "信頼関係を積み上げる環境"],
+    risk: ["相手との接点が薄い仕事", "専門性が活かせない配属", "短期成果だけを追う職場"],
+    strengths: ["相手の状況を深く理解する力", "専門知識を相手のために使う姿勢", "信頼を築きながら支援する点"],
+    stuck: ["支える相手が見えない", "専門性が浅くなる", "関係性が短期で切れる"],
+    script: "私は、人の状況を丁寧に理解し、専門性を使って支えることにやりがいを感じます。信頼関係を築きながら、相手の成長や安心に貢献したいです。",
+  },
+  {
+    code: "RBLI",
+    id: "optimizer",
+    name: "Operational Optimizer",
+    label: "改善設計タイプ",
+    tagline: "仕組みを読み、無駄を見つけ、自分で改善を積み上げる人。",
+    lead: "安定した環境の中で、幅広い視点から業務を改善していくタイプ。金融、メーカー、インフラの企画・管理で強みが出ます。",
+    flow: ["現状を読む", "無駄を見つける", "改善を試す", "仕組みに残す"],
+    match: { stability: 4.4, generalist: 4.3, logic: 4.5, autonomy: 4.0, planning: 4.3 },
+    fit: ["金融、メーカー、インフラの企画・管理", "業務改善や管理会計に近い仕事", "制度がありつつ改善余地もある環境"],
+    risk: ["改善提案が通りにくい組織", "変化だけが目的化した職場", "評価基準が曖昧な環境"],
+    strengths: ["構造を読み解く力", "改善を積み上げる実行力", "安定の中に変化を作る点"],
+    stuck: ["非効率が放置される", "提案が届かない", "目的が曖昧"],
+    script: "私は、既存の仕組みを理解したうえで課題を見つけ、改善を積み上げることが得意です。安定した事業基盤の中で、より良い運営に貢献したいです。",
+  },
+  {
+    code: "RBLC",
+    id: "builder",
     name: "Stable Builder",
     label: "安定構築タイプ",
     tagline: "信頼を積み上げ、仕組みを整え、長く強い成果を作る人。",
@@ -65,49 +230,23 @@ const typeProfiles = [
     script: "私は、目標に対して必要な手順を整理し、周囲と信頼関係を築きながら着実に成果を積み上げることが得意です。長期的に価値を出せる環境で強みを発揮したいです。",
   },
   {
-    id: "market",
-    name: "Market Creator",
-    label: "市場創造タイプ",
-    tagline: "人の気持ちを読み、価値に変え、周囲を巻き込む人。",
-    lead: "生活者、ブランド、企画、コミュニケーションに近い環境で伸びるタイプ。人の気持ちや市場の動きを捉えて価値に変える力があります。",
-    flow: ["相手の本音を掴む", "価値を言語化する", "人を巻き込む", "体験として届ける"],
-    match: { consumer: 4.8, team: 4.3, story: 4.4, generalist: 4.2, culture: 4.2, logic: 3.0, technical: 2.7 },
-    fit: ["消費者や顧客に近い商品・サービス", "企画、マーケティング、営業、ブランドに関わる仕事", "人を巻き込みながら形にする環境"],
-    risk: ["技術や数値だけで評価される環境", "顧客や市場との距離が遠い仕事", "個人で淡々と進める時間が長い職場"],
-    strengths: ["相手視点で価値を考える力", "経験をストーリーとして伝える力", "周囲を巻き込みながら前に進める点"],
-    stuck: ["ユーザーや顧客の反応が見えない", "一人で完結する作業が長く続く", "数字や仕様だけで価値判断される"],
-    script: "私は、相手の立場や感情を捉え、価値を分かりやすく言語化して周囲を巻き込むことが得意です。顧客や生活者に近いところで、納得感のある価値づくりに関わりたいです。",
+    code: "RBHI",
+    id: "advisor",
+    name: "Trusted Advisor",
+    label: "顧客伴走タイプ",
+    tagline: "相手を理解し、広く考え、自分の判断で支える人。",
+    lead: "安定した基盤の中で、顧客や周囲の期待に応えながら幅広く価値を出すタイプ。金融、法人営業、コンサルティブ営業と相性が良いです。",
+    flow: ["相手を知る", "背景を整理する", "提案を組む", "信頼を積む"],
+    match: { stability: 4.2, generalist: 4.4, consumer: 4.1, story: 4.3, autonomy: 4.0 },
+    fit: ["金融、法人営業、不動産、顧客提案型の仕事", "長期的な信頼が重要な仕事", "幅広い知識を使う環境"],
+    risk: ["短期売上だけが重視される職場", "顧客との接点が浅い仕事", "裁量がなく提案余地が少ない環境"],
+    strengths: ["相手の意図を読む力", "状況に応じた提案力", "自分で判断し信頼を積む点"],
+    stuck: ["顧客理解が浅い", "提案の自由度がない", "関係性が短期で終わる"],
+    script: "私は、相手の状況を理解し、幅広い選択肢から最適な提案を考えることが得意です。長期的な信頼関係を築きながら価値を届けたいです。",
   },
   {
-    id: "expert",
-    name: "Technical Expert",
-    label: "専門深化タイプ",
-    tagline: "深く理解し、磨き続け、専門性で突破する人。",
-    lead: "技術、データ、専門性を深める環境で伸びるタイプ。複雑なものを理解し、専門性を武器に価値を出していきます。",
-    flow: ["複雑さに向き合う", "原理を理解する", "手を動かして磨く", "専門性で貢献する"],
-    match: { technical: 4.8, logic: 4.7, career: 4.2, planning: 4.0, autonomy: 3.8, consumer: 2.6, global: 3.1 },
-    fit: ["技術、研究、データ、プロダクトに近い仕事", "専門性が評価される職種別採用", "長期的にスキルを積み上げられる環境"],
-    risk: ["配属幅が広すぎて専門性が定まりにくい環境", "営業・調整中心で技術に触れにくい仕事", "学習支援や育成が薄い職場"],
-    strengths: ["複雑な課題を粘り強く理解する力", "専門性を継続的に磨ける姿勢", "論理的に説明し改善できる点"],
-    stuck: ["専門性より配属運に左右される", "深く考える前に調整業務で埋まる", "学習や検証の時間が取れない"],
-    script: "私は、複雑なテーマを粘り強く理解し、専門性を積み上げながら価値を出すことに強みがあります。技術やデータをもとに、再現性のある改善に貢献したいです。",
-  },
-  {
-    id: "global",
-    name: "Global Producer",
-    label: "事業推進タイプ",
-    tagline: "大きく捉え、人と資源を動かし、事業を前に進める人。",
-    lead: "大きな事業、グローバル、投資、組織横断のテーマで伸びるタイプ。広い視点で機会を見つけ、人と資源を動かす仕事に向きます。",
-    flow: ["大局を見る", "機会を見つける", "関係者をつなぐ", "事業を動かす"],
-    match: { global: 4.8, generalist: 4.5, ambition: 4.5, team: 4.2, salary: 4.0, stability: 3.5, workLife: 2.7 },
-    fit: ["商社、金融、インフラ、大規模事業会社", "海外、投資、法人営業、事業開発に近い仕事", "多様な関係者を動かす環境"],
-    risk: ["狭い専門領域に閉じる仕事", "変化や異動が少なすぎる環境", "個人作業が中心で外部接点が少ない職場"],
-    strengths: ["大きな目的から逆算して動く力", "関係者を巻き込む推進力", "未知の環境でも学びながら適応する点"],
-    stuck: ["担当範囲が狭く全体像が見えない", "人や組織を動かす機会が少ない", "国内・単一業務だけで完結する"],
-    script: "私は、全体像から目的を捉え、関係者を巻き込みながら物事を前に進めることにやりがいを感じます。大きな事業や多様な人が関わる環境で強みを発揮したいです。",
-  },
-  {
-    id: "culture",
+    code: "RBHC",
+    id: "connector",
     name: "Culture Connector",
     label: "組織調整タイプ",
     tagline: "人と人をつなぎ、場を整え、チームの成果を底上げする人。",
@@ -121,20 +260,37 @@ const typeProfiles = [
     script: "私は、周囲の状況を丁寧に捉え、関係者が動きやすい状態を作ることに強みがあります。チームで成果を出す環境で、組織全体の前進に貢献したいです。",
   },
   {
-    id: "creative",
-    name: "Creative Planner",
-    label: "企画表現タイプ",
-    tagline: "違和感を拾い、言葉と体験に変え、人の心を動かす人。",
-    lead: "企画、表現、ブランド、メディアに近い環境で伸びるタイプ。人の感情や空気を読み取り、魅力的なストーリーに変える力があります。",
-    flow: ["空気を読む", "切り口を見つける", "表現に落とす", "反応を見て磨く"],
-    match: { consumer: 4.7, story: 4.8, change: 4.0, autonomy: 3.9, team: 3.8, technical: 2.3, planning: 2.8 },
-    fit: ["広告、メディア、エンタメ、消費財の企画職", "ブランドやコミュニケーションに関わる仕事", "アイデアを形にしやすい環境"],
-    risk: ["手順や承認が重く自由度が低い環境", "数字や仕様だけで判断される仕事", "表現より運用が中心の職場"],
-    strengths: ["人の気持ちを言語化する力", "魅力的な切り口を見つける発想力", "経験を伝わるストーリーにできる点"],
-    stuck: ["表現の余地がほとんどない", "正解が固定されすぎている", "反応やフィードバックが見えない"],
-    script: "私は、人の感情や場の空気を捉え、伝わる言葉や企画に変えることが得意です。生活者や顧客の反応に近い場所で、心が動く価値づくりに関わりたいです。",
+    code: "RSLI",
+    id: "craft",
+    name: "Craft Specialist",
+    label: "職人専門タイプ",
+    tagline: "一つの領域を磨き、品質と再現性で信頼を作る人。",
+    lead: "専門性、品質、継続的な改善に強いタイプ。大きな変化よりも、目の前の技術や仕事を深く磨くほど価値が出ます。",
+    flow: ["基礎を固める", "細部を観察する", "反復して磨く", "品質で信頼される"],
+    match: { technical: 4.5, planning: 4.6, stability: 4.0, logic: 4.4, autonomy: 4.1, generalist: 2.0, change: 2.5 },
+    fit: ["メーカー、研究開発、品質管理、専門職", "技術や業務知識を深められる職種", "長期的にスキルを磨ける環境"],
+    risk: ["異動が多く専門性が積み上がらない環境", "スピードだけで品質が軽視される職場", "広く浅い経験ばかり求められる仕事"],
+    strengths: ["細部まで丁寧に詰める力", "専門性を継続して磨く粘り強さ", "品質や再現性にこだわれる点"],
+    stuck: ["短期で役割が変わり続ける", "品質より勢いが評価される", "深く学ぶ時間が取れない"],
+    script: "私は、一つの領域を深く理解し、品質や再現性を高めることで価値を出すことに強みがあります。専門性を着実に磨ける環境で信頼される成果を出したいです。",
   },
   {
+    code: "RSLC",
+    id: "steward",
+    name: "Reliability Steward",
+    label: "品質協働タイプ",
+    tagline: "専門性を守り、周囲と連携し、安心できる品質を支える人。",
+    lead: "深い知識と協働性を両立し、安定運用や品質を支えるタイプ。製薬、金融システム、品質保証、インフラ運営に向きます。",
+    flow: ["基準を理解する", "リスクを見抜く", "周囲と整える", "安心を守る"],
+    match: { technical: 4.4, planning: 4.5, stability: 4.5, logic: 4.3, team: 4.4, generalist: 2.2 },
+    fit: ["品質保証、製薬、金融システム、インフラ運用", "正確さと連携が必要な専門職", "信頼性を重視する環境"],
+    risk: ["スピードだけで品質を犠牲にする職場", "個人依存が強すぎる環境", "基準や役割が曖昧な組織"],
+    strengths: ["リスクを先回りして捉える力", "基準を守る責任感", "周囲と品質を作る協働力"],
+    stuck: ["基準が曖昧", "属人化が強い", "品質より勢いが優先される"],
+    script: "私は、専門知識をもとにリスクを先回りして捉え、周囲と連携しながら品質を支えることが得意です。信頼性が重要な領域で価値を出したいです。",
+  },
+  {
+    code: "RSHI",
     id: "impact",
     name: "Social Impact Builder",
     label: "社会貢献タイプ",
@@ -149,60 +305,19 @@ const typeProfiles = [
     script: "私は、仕事を通じて社会や生活を支える実感を大切にしています。長期的に信頼される仕組みづくりに関わり、必要とされ続ける価値を届けたいです。",
   },
   {
-    id: "reward",
-    name: "High Reward Challenger",
-    label: "高報酬挑戦タイプ",
-    tagline: "高い基準に挑み、成果で評価を取りにいく人。",
-    lead: "競争環境、明確な成果評価、高待遇に惹かれるタイプ。負荷があっても、成長と報酬が結びつく環境でエネルギーが出ます。",
-    flow: ["高い目標を置く", "勝ち筋を探す", "行動量を上げる", "成果で示す"],
-    match: { salary: 4.9, ambition: 4.8, growth: 4.5, career: 4.5, autonomy: 4.0, workLife: 2.1, stability: 2.7 },
-    fit: ["外資、コンサル、金融、商社、成長企業", "成果が報酬や機会に反映される仕事", "選考難度が高く市場価値も上がりやすい環境"],
-    risk: ["評価基準が曖昧で報われにくい組織", "挑戦機会が少なく横並びの環境", "給与より年功が重視される職場"],
-    strengths: ["高い目標に向かう推進力", "負荷を成長機会として捉える姿勢", "成果にこだわって行動できる点"],
-    stuck: ["頑張りが評価や報酬に反映されない", "目標が低く刺激が少ない", "横並びで差がつきにくい"],
-    script: "私は、高い目標に対して行動量と改善を重ね、成果で価値を示すことにやりがいを感じます。厳しい環境でも成長と評価が結びつく場所で挑戦したいです。",
-  },
-  {
-    id: "craft",
-    name: "Craft Specialist",
-    label: "職人専門タイプ",
-    tagline: "一つの領域を磨き、品質と再現性で信頼を作る人。",
-    lead: "専門性、品質、継続的な改善に強いタイプ。大きな変化よりも、目の前の技術や仕事を深く磨くほど価値が出ます。",
-    flow: ["基礎を固める", "細部を観察する", "反復して磨く", "品質で信頼される"],
-    match: { technical: 4.5, planning: 4.6, stability: 4.0, logic: 4.4, autonomy: 3.1, generalist: 2.0, change: 2.5 },
-    fit: ["メーカー、研究開発、品質管理、専門職", "技術や業務知識を深められる職種", "長期的にスキルを磨ける環境"],
-    risk: ["異動が多く専門性が積み上がらない環境", "スピードだけで品質が軽視される職場", "広く浅い経験ばかり求められる仕事"],
-    strengths: ["細部まで丁寧に詰める力", "専門性を継続して磨く粘り強さ", "品質や再現性にこだわれる点"],
-    stuck: ["短期で役割が変わり続ける", "品質より勢いが評価される", "深く学ぶ時間が取れない"],
-    script: "私は、一つの領域を深く理解し、品質や再現性を高めることで価値を出すことに強みがあります。専門性を着実に磨ける環境で信頼される成果を出したいです。",
-  },
-  {
-    id: "lifestyle",
-    name: "Life Design Optimizer",
-    label: "働き方重視タイプ",
-    tagline: "無理なく続けられる働き方で、安定して価値を出す人。",
-    lead: "働きやすさ、制度、生活とのバランスを重視するタイプ。長く健康的に働ける環境でこそ、集中力と継続力が活きます。",
-    flow: ["生活軸を整える", "無理のない計画を立てる", "継続して成果を出す", "余白から学ぶ"],
-    match: { workLife: 4.9, stability: 4.3, disclosure: 4.5, planning: 4.1, team: 3.8, growth: 2.5, ambition: 2.2 },
-    fit: ["制度や働き方の情報開示がある企業", "勤務地や勤務時間の納得感が高い仕事", "継続的に成長できる落ち着いた環境"],
-    risk: ["長時間労働が常態化している職場", "配属や勤務地の不確実性が高い環境", "負荷の高さを美徳にしすぎる組織"],
-    strengths: ["継続的に成果を出す自己管理力", "無理のない計画を立てる現実感", "生活と仕事を両立して成長できる点"],
-    stuck: ["働き方の見通しが立たない", "忙しさで学習や生活が崩れる", "制度があっても使いにくい"],
-    script: "私は、安定して力を発揮できる働き方を大切にしながら、継続的に成果を積み上げることが得意です。長く価値を出せる環境で着実に成長したいです。",
-  },
-  {
-    id: "discoverer",
-    name: "Career Explorer",
-    label: "探索成長タイプ",
-    tagline: "まず動き、経験から自分の軸を見つけていく人。",
-    lead: "幅広い経験、配属の広がり、試行錯誤の余地がある環境で伸びるタイプ。最初から一つに絞るより、経験を通じて得意を見つける方が自然です。",
-    flow: ["まず試す", "違いを比べる", "得意を見つける", "軸に育てる"],
-    match: { generalist: 4.8, change: 4.1, selfFit: 4.7, autonomy: 3.7, growth: 3.8, technical: 2.9, stability: 3.0 },
-    fit: ["ジョブローテーションや配属幅のある大手企業", "複数職種を経験できる総合職", "自分の軸を育てながら選べる環境"],
-    risk: ["入社時点で専門性を固定される職場", "異動や挑戦の選択肢が少ない環境", "自分で振り返る余白がない仕事"],
-    strengths: ["未知の経験から学ぶ柔軟性", "複数の観点を比べて考える力", "自分の適性を更新し続けられる点"],
-    stuck: ["選択肢が狭く固定される", "経験の意味づけをする時間がない", "早期に専門を決めきる必要がある"],
-    script: "私は、幅広い経験から学び、自分の強みや軸を更新していくことに前向きです。多様な仕事に触れながら、将来的に大きく価値を出せる領域を見つけたいです。",
+    code: "RSHC",
+    id: "supporter",
+    name: "Community Supporter",
+    label: "安心支援タイプ",
+    tagline: "人に寄り添い、専門性を活かし、安心できる場を守る人。",
+    lead: "安定した環境で、人への関心と専門性を活かしながら支えるタイプ。ヘルスケア、教育、人事、顧客支援で強みが出ます。",
+    flow: ["相手を受け止める", "背景を理解する", "支援を整える", "安心を広げる"],
+    match: { stability: 4.6, technical: 3.8, consumer: 4.2, story: 4.2, team: 4.7, workLife: 4.0 },
+    fit: ["ヘルスケア、教育、人事、顧客支援", "人を長期的に支える仕事", "信頼と協働を大切にする環境"],
+    risk: ["人との接点が薄い仕事", "短期成果だけを追う職場", "支援より競争が強い環境"],
+    strengths: ["相手に寄り添う力", "専門性を安心へ変える力", "周囲と支援を続ける姿勢"],
+    stuck: ["人の役に立つ実感がない", "関係性が浅い", "競争が強すぎる"],
+    script: "私は、相手に寄り添いながら必要な支援を考え、安心につなげることに強みがあります。人を長期的に支える環境で価値を出したいです。",
   },
 ];
 
@@ -242,6 +357,7 @@ const els = {
   typeLead: document.querySelector("#typeLead"),
   fitScore: document.querySelector("#fitScore"),
   growthFlow: document.querySelector("#growthFlow"),
+  axisList: document.querySelector("#axisList"),
   fitEnvironment: document.querySelector("#fitEnvironment"),
   riskEnvironment: document.querySelector("#riskEnvironment"),
   esStrengths: document.querySelector("#esStrengths"),
@@ -328,6 +444,8 @@ function bindEvents() {
     questions.forEach((question, index) => {
       state.answers[index] = ["change", "growth", "autonomy", "logic", "career", "selfFit"].includes(question.axis) ? 5 : 3;
     });
+    renderQuestions();
+    updateProgress();
     calculateAndRender();
   });
   els.resetAnswers.addEventListener("click", () => {
@@ -345,8 +463,11 @@ function renderQuestions() {
     <article class="question-card">
       <strong>${index + 1}. ${question.text}</strong>
       <div class="choice-row">
-        <button type="button" data-index="${index}" data-value="2">${question.left}</button>
-        <button type="button" data-index="${index}" data-value="5">${question.right}</button>
+        ${choiceLabels.map((choice) => `
+          <button type="button" data-index="${index}" data-value="${choice.value}">
+            ${choice.value === 1 ? question.left : choice.value === 5 ? question.right : choice.label}
+          </button>
+        `).join("")}
       </div>
     </article>
   `).join("");
@@ -385,11 +506,12 @@ function calculateAndRender() {
 
 function buildResult() {
   const vector = answerVector();
-  const type = bestType(vector);
+  const dimensions = buildDimensions(vector);
+  const type = bestType(dimensions.code, vector);
   const fitScore = Math.round(typeCompatibility(vector, type.match));
   const industries = industryRanking(vector);
   const companies = companyRanking(vector, industries);
-  return { vector, type, fitScore, industries, companies };
+  return { vector, dimensions, type, fitScore, industries, companies };
 }
 
 function answerVector() {
@@ -411,8 +533,26 @@ function answerVector() {
   return vector;
 }
 
-function bestType(vector) {
-  return [...typeProfiles].sort((a, b) => typeCompatibility(vector, b.match) - typeCompatibility(vector, a.match))[0];
+function buildDimensions(vector) {
+  const items = axisDefinitions.map((axis) => {
+    const score = axis.score(vector);
+    const isRight = score >= 3;
+    return {
+      ...axis,
+      score,
+      code: isRight ? axis.rightCode : axis.leftCode,
+      dominantLabel: isRight ? axis.rightLabel : axis.leftLabel,
+    };
+  });
+  return {
+    code: items.map((item) => item.code).join(""),
+    items,
+  };
+}
+
+function bestType(code, vector) {
+  return typeProfiles.find((type) => type.code === code)
+    || [...typeProfiles].sort((a, b) => typeCompatibility(vector, b.match) - typeCompatibility(vector, a.match))[0];
 }
 
 function typeCompatibility(vector, target) {
@@ -448,7 +588,7 @@ function companyFit(company, vector, industryFit) {
 }
 
 function renderResult(result) {
-  els.typeName.textContent = `${result.type.label} / ${result.type.name}`;
+  els.typeName.textContent = `${result.type.code} ${result.type.label} / ${result.type.name}`;
   els.typeTagline.textContent = result.type.tagline;
   els.typeLead.textContent = result.type.lead;
   els.fitScore.textContent = result.fitScore;
@@ -456,6 +596,18 @@ function renderResult(result) {
     <div>
       <span>${index + 1}</span>
       <strong>${text}</strong>
+    </div>
+  `).join("");
+  els.axisList.innerHTML = result.dimensions.items.map((axis) => `
+    <div class="axis-item">
+      <div class="axis-head">
+        <span>${axis.leftLabel}</span>
+        <strong>${axis.dominantLabel}</strong>
+        <span>${axis.rightLabel}</span>
+      </div>
+      <div class="axis-track" style="--value: ${normalize(axis.score, 1, 5)}%;">
+        <i></i>
+      </div>
     </div>
   `).join("");
   els.fitEnvironment.innerHTML = result.type.fit.map((text) => `<li>${text}</li>`).join("");
@@ -497,7 +649,7 @@ function renderResult(result) {
   els.companyList.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", () => saveCompanyToPlanner(button.dataset.company));
   });
-  els.shareType.textContent = result.type.label;
+  els.shareType.textContent = `${result.type.code} ${result.type.label}`;
   els.shareSummary.textContent = `${result.type.tagline} 相性が良い業界は ${result.industries.slice(0, 3).map((d) => d.industry).join("、")}。`;
 }
 
@@ -536,7 +688,7 @@ function saveCompanyToPlanner(companyName, notify = true) {
 
 async function copyResultText() {
   if (!state.result) return;
-  const text = `私のキャリア相性診断は「${state.result.type.label}」。${state.result.type.tagline} 相性が良い業界は ${state.result.industries.slice(0, 3).map((d) => d.industry).join("、")}。おすすめ企業は ${state.result.companies.slice(0, 3).map((d) => d.company.company).join("、")}。`;
+  const text = `私のキャリア相性診断は「${state.result.type.code} ${state.result.type.label}」。${state.result.type.tagline} 相性が良い業界は ${state.result.industries.slice(0, 3).map((d) => d.industry).join("、")}。おすすめ企業は ${state.result.companies.slice(0, 3).map((d) => d.company.company).join("、")}。`;
   try {
     await navigator.clipboard?.writeText(text);
     showToast("結果テキストをコピーしました");
@@ -547,18 +699,22 @@ async function copyResultText() {
 
 function profilePresetFromType(typeId) {
   const presetMap = {
-    growth: "growthCareer",
-    reward: "growthCareer",
-    stable: "stability",
-    impact: "stability",
-    lifestyle: "stability",
-    expert: "engineer",
+    strategist: "growthCareer",
+    producer: "growthCareer",
+    expert: "growthCareer",
+    creator: "balanced",
+    coCreator: "balanced",
+    architect: "engineer",
+    artisan: "engineer",
+    coach: "balanced",
+    optimizer: "generalist",
+    builder: "stability",
+    advisor: "balanced",
+    connector: "balanced",
     craft: "engineer",
-    global: "generalist",
-    discoverer: "generalist",
-    market: "balanced",
-    creative: "balanced",
-    culture: "balanced",
+    steward: "engineer",
+    impact: "stability",
+    supporter: "stability",
   };
   return presetMap[typeId] || "balanced";
 }

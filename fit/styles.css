@@ -123,6 +123,7 @@ main {
 .diagnosis-panel,
 .result-card,
 .growth-flow-section,
+.axis-section,
 .script-section,
 .insight-grid article,
 .industry-section,
@@ -258,7 +259,7 @@ main {
 
 .choice-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 8px;
   margin-top: 12px;
 }
@@ -269,6 +270,8 @@ main {
   border-radius: 7px;
   background: #fff;
   color: var(--ink);
+  font-size: 12px;
+  line-height: 1.35;
 }
 
 .choice-row button.is-selected {
@@ -331,14 +334,58 @@ main {
 }
 
 .growth-flow-section,
+.axis-section,
 .script-section {
   padding: 18px;
 }
 
 .growth-flow-section h2,
+.axis-section h2,
 .script-section h2 {
   font-size: 24px;
   line-height: 1.25;
+}
+
+.axis-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.axis-item {
+  display: grid;
+  gap: 8px;
+}
+
+.axis-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.axis-head strong {
+  font-size: 15px;
+}
+
+.axis-track {
+  position: relative;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #dfeceb, #f2eee8);
+}
+
+.axis-track i {
+  position: absolute;
+  top: 50%;
+  left: var(--value);
+  width: 18px;
+  height: 18px;
+  border: 3px solid #fff;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 4px 10px rgba(15, 98, 105, 0.22);
+  transform: translate(-50%, -50%);
 }
 
 .growth-flow {
@@ -679,6 +726,12 @@ li {
   }
 
   .choice-row {
-    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .choice-row button {
+    min-height: 48px;
+    padding: 6px 4px;
+    font-size: 10px;
   }
 }
