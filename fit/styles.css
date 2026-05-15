@@ -122,6 +122,8 @@ main {
 .result-preview,
 .diagnosis-panel,
 .result-card,
+.growth-flow-section,
+.script-section,
 .insight-grid article,
 .industry-section,
 .company-section,
@@ -197,6 +199,11 @@ main {
 .company-section,
 .share-section {
   padding: 18px;
+}
+
+.diagnosis-panel,
+.result-panel {
+  scroll-margin-top: 92px;
 }
 
 .panel-head,
@@ -297,6 +304,15 @@ main {
   line-height: 1.7;
 }
 
+.type-tagline {
+  display: block;
+  max-width: 760px;
+  margin-top: 10px;
+  color: var(--accent-dark);
+  font-size: clamp(20px, 3vw, 32px);
+  line-height: 1.25;
+}
+
 .type-score {
   min-width: 118px;
   text-align: right;
@@ -314,9 +330,55 @@ main {
   text-transform: uppercase;
 }
 
+.growth-flow-section,
+.script-section {
+  padding: 18px;
+}
+
+.growth-flow-section h2,
+.script-section h2 {
+  font-size: 24px;
+  line-height: 1.25;
+}
+
+.growth-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.growth-flow div {
+  min-height: 104px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfb;
+}
+
+.growth-flow span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.growth-flow strong {
+  display: block;
+  margin-top: 14px;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
 .insight-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
 }
 
@@ -343,6 +405,17 @@ li {
   background: #fbfcfb;
   color: var(--muted);
   line-height: 1.55;
+}
+
+.script-section p:not(.eyebrow) {
+  margin-top: 12px;
+  padding: 16px;
+  border-left: 4px solid var(--warm);
+  border-radius: 8px;
+  background: #fff8f3;
+  color: #593826;
+  font-size: 15px;
+  line-height: 1.8;
 }
 
 .industry-fit-list {
@@ -524,6 +597,12 @@ li {
 @media (max-width: 1040px) {
   .hero,
   .insight-grid,
+  .growth-flow,
+  .share-section {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero,
   .share-section {
     grid-template-columns: 1fr;
   }
@@ -572,7 +651,9 @@ li {
   }
 
   .question-list,
-  .company-list {
+  .company-list,
+  .insight-grid,
+  .growth-flow {
     grid-template-columns: 1fr;
   }
 
