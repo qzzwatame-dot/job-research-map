@@ -665,6 +665,10 @@ function saveToPlanner() {
     ...(loadLocal("jobResearchApplicantProfile") || {}),
     preference_preset: profilePresetFromType(state.result.type.id),
     condition_summary: `${state.result.type.label}: ${state.result.type.lead}`,
+    career_fit_code: state.result.type.code,
+    career_fit_label: state.result.type.label,
+    career_fit_name: state.result.type.name,
+    career_fit_tagline: state.result.type.tagline,
   };
   localStorage.setItem("jobResearchApplicantProfile", JSON.stringify(profile));
   showToast("TOP10と診断タイプをPlannerに保存しました");

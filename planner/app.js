@@ -54,6 +54,8 @@ const els = {
   syncButton: document.querySelector("#syncButton"),
   syncNow: document.querySelector("#syncNow"),
   syncStatus: document.querySelector("#syncStatus"),
+  careerFitType: document.querySelector("#careerFitType"),
+  careerFitSummary: document.querySelector("#careerFitSummary"),
   presetMode: document.querySelector("#presetMode"),
   mbtiType: document.querySelector("#mbtiType"),
   preferredJobTypes: document.querySelector("#preferredJobTypes"),
@@ -192,6 +194,7 @@ function renderAll() {
   els.statInterested.textContent = interestedNames().length;
   els.plannerSummary.textContent = summaryText();
   renderRecommendations();
+  renderCareerFitProfile();
   renderBoard();
   renderTimeline();
   renderDetail(state.selected);
@@ -283,9 +286,9 @@ function renderBoard() {
     <div class="board-column">
       <h3>${status} ${byStatus[status].length}</h3>
       ${byStatus[status].slice(0, 8).map((item) => `
-        <button class="board-item" type="button" data-company="${escapeAttr(item.company.company)}">
+        <button class="board-item" type="button" data-company="${escapeAttr(item.company.company)}" title="${escapeAttr(item.action)}">
           <strong>${item.company.company}</strong>
-          <small>${item.priority} / ${item.action}</small>
+          <small>${item.priority}</small>
         </button>
       `).join("")}
     </div>
@@ -293,6 +296,14 @@ function renderBoard() {
   els.applicationBoard.querySelectorAll(".board-item").forEach((button) => {
     button.addEventListener("click", () => selectCompany(findCompany(button.dataset.company)));
   });
+}
+
+function renderCareerFitProfile() {
+  const profile = state.applicantProfile || {};
+  const code = profile.career_fit_code || "";
+  const label = profile.career_fit_label || "";
+  els.careerFitType.textContent = code && label ? `${code} ${label}` : "未診断";
+  els.careerFitSummary.textContent = profile.career_fit_tagline || "診断すると、16タイプがここに表示されます。";
 }
 
 function renderTimeline() {
@@ -552,6 +563,10 @@ function defaultProfile() {
     autonomy_preference_score: 3,
     logic_orientation_score: 3,
     planning_orientation_score: 3,
+    career_fit_code: "",
+    career_fit_label: "",
+    career_fit_name: "",
+    career_fit_tagline: "",
   };
 }
 

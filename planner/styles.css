@@ -254,6 +254,56 @@ input[type="range"] {
   margin-top: 14px;
 }
 
+.fit-type-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: linear-gradient(145deg, rgba(17, 109, 116, 0.08), rgba(185, 95, 50, 0.08));
+}
+
+.fit-type-card span,
+.fit-type-card strong,
+.fit-type-card small {
+  display: block;
+}
+
+.fit-type-card span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.fit-type-card strong {
+  margin-top: 4px;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.fit-type-card small {
+  margin-top: 4px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.fit-type-card a {
+  flex: none;
+  min-height: 30px;
+  padding: 0 9px;
+  border: 1px solid var(--accent);
+  border-radius: 7px;
+  background: #fff;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 28px;
+  text-decoration: none;
+}
+
 .checkline {
   display: flex;
   gap: 8px;
@@ -411,10 +461,14 @@ input[type="range"] {
 }
 
 .board-item {
-  display: block;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
   width: 100%;
   margin-top: 7px;
-  padding: 8px;
+  min-height: 34px;
+  padding: 6px 8px;
   border: 1px solid var(--line);
   border-radius: 7px;
   background: #fff;
@@ -422,14 +476,24 @@ input[type="range"] {
   text-align: left;
 }
 
-.board-item strong,
-.board-item small {
-  display: block;
+.board-item strong {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .board-item small {
-  margin-top: 3px;
-  color: var(--muted);
+  flex: none;
+  min-width: 28px;
+  padding: 2px 5px;
+  border-radius: 999px;
+  background: var(--soft);
+  color: var(--accent-dark);
+  font-size: 11px;
+  font-weight: 800;
+  text-align: center;
 }
 
 .score-stack {
